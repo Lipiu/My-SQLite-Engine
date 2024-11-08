@@ -2,5 +2,5 @@
 using namespace std;
 
 int main(){
-    cout << "First commit" << endl;
+    cout << "First commit!" << endl;
 }
