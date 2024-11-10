@@ -2,5 +2,5 @@
 using namespace std;
 
 int main() {
-	cout << "First comMMMMMMMMMMMMMMMMMMMMMMMMMMmit!" << endl;
+	cout << "Last comMMMMMMMMMMMMMMMMMMMMMMMMMMmit!" << endl;
 }
