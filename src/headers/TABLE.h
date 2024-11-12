@@ -5,94 +5,98 @@
 class Table{
 private:
     int rows = 0;
-    int numberOfRows = 0;
     int columns = 0;
-    int numberOfColumns = 0;
     int** dynamic_matrix = nullptr;
     std::string name = "";
 
-public:
-    //CONSTRUCTOR
-    Table(int rows, int numberOfRows, int columns, int numberOfColumns, int** dynamic_matrix, std::string name){
-        this->setRows(rows);
-        this->setNumberOfRows(numberOfRows);
-        this->setColumns(columns);
-        this->setNumberOfColumns(numberOfColumns);
-        this->setDynamicMatrix(rows, columns);
-        this->setName(name);
+    //function to dynamically allocate the matrix
+    void allocateDynamicMatrix(){
+        dynamic_matrix = new int*[rows];
+        for(int i = 0; i < rows; i++){
+            dynamic_matrix[i] = new int[columns];
+            for(int j = 0; j < columns; j++)
+                dynamic_matrix[i][j] = 0;
+        }
     }
 
-    //DESTRUCTOR (not working)
+public:
+    //CONSTRUCTOR
+    Table(int rows, int columns, const std::string& name){
+        this->setRows(rows);
+        this->setColumns(columns);
+        this->setName(name);
+        //name has & to avoid creating a copy of it
+        this->allocateDynamicMatrix();
+    }
+
+    //TO DO: COPY CONSTRUCTOR
+
+    //DESTRUCTOR
     ~Table(){
-        for(int i = 0; i < rows; i++)
-            delete[] dynamic_matrix[i];
-        delete[] dynamic_matrix;
+        if(this->dynamic_matrix){
+            for(int i = 0; i < this->rows; i++)
+                delete[] this->dynamic_matrix[i];
+            delete[] this->dynamic_matrix;
+        }
         dynamic_matrix = nullptr;
+        
     }
 
     //SETTERS
     void setRows(int rows){
         if(rows < 0)
-            throw "Index has to be positive";
+            throw std::invalid_argument("Index has to be positive!");
         this->rows = rows;
-    }
-
-    void setNumberOfRows(int numberOfRows){
-        if(numberOfRows < 0)
-            throw "Index has to be positive";
     }
 
     void setColumns(int columns){
         if(columns < 0)
-            throw "Index has to be positive";
+            throw std::invalid_argument("Index has to be positive!");
         this->columns = columns;
     }
 
-    void setNumberOfColumns(int numberOfColumns){
-        if(numberOfColumns < 0)
-            throw "Index has to be positive";
-    }
-
-    void setDynamicMatrix(int row, int col){
-        if (row > 0 && row < rows && col > 0 && col < rows) 
-            dynamic_matrix[row][col];
-        throw "Index out of bounds";
-    }
-
-    void setName(std::string name){
+    void setName(const std::string& name){
         if(name.empty())
-            throw "Invalid name";
+            throw std::invalid_argument("Name cannot be empty!");
         this->name = name;
     }
 
-    
+    void setValue(int row, int col, int value) {
+        if (row < 0 || row >= this->rows || col < 0 || col >= this->columns) {
+            throw std::out_of_range("Index out of bounds.");
+        }
+        this->dynamic_matrix[row][col] = value;
+    }
 
     //GETTERS
     int getRows(){
         return this->rows;
     }
 
-    int getNumberOfRows(){
-        return this->numberOfRows;
-    }
-
     int getColumns(){
         return this->columns;
     }
 
-    int getNumberOfColumns(){
-        return this->numberOfColumns;
-    }
-
-    int getDynamicMatrix(){
-        //dynamic allocation of the matrix
-        int** dynamic_matrix = new int*[rows];
-        for(int i = 0; i < rows; i++)
-            dynamic_matrix[i] = new int[columns];
-    }
-
     std::string getName(){
         return this->name;
+    }
+
+    int getValue(int row, int col) const {
+        if (row < 0 || row >= this->rows || col < 0 || col >= this->columns) {
+            throw std::out_of_range("Index out of bounds.");
+        }
+        return this->dynamic_matrix[row][col];
+    }
+
+    //test printing
+    void printMatrix() const {
+        std::cout << "Table: " << this->name << "\n";
+        for (int i = 0; i < this->rows; i++) {
+            for (int j = 0; j < this->columns; j++) {
+                std::cout << this->dynamic_matrix[i][j] << " ";
+            }
+            std::cout << "\n";
+        }
     }
     
 };
