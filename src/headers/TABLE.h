@@ -22,11 +22,12 @@ public:
         this->setName(name);
     }
 
-    //DESTRUCTOR
+    //DESTRUCTOR (not working)
     ~Table(){
         for(int i = 0; i < rows; i++)
-            delete[] this->rows;
-        delete[] this->columns;
+            delete[] dynamic_matrix[i];
+        delete[] dynamic_matrix;
+        dynamic_matrix = nullptr;
     }
 
     //SETTERS
