@@ -1,5 +1,5 @@
 #include <iostream>
-#include "headers/TABLE.h"
+#include "headers/CREATE_TABLE.h"
 
 int main() {
     try {
@@ -23,6 +23,8 @@ int main() {
         // Attempting to set a value out of bounds will throw an exception
         try {
             table.setValue(3, 0, 999);
+            //invalid because i only have 2 rows, so 3 is out of bounds
+            //i would have to setValue row 3 and it would work
         } catch (const std::out_of_range& e) {
             std::cout << "Caught exception: " << e.what() << "\n";
         }
