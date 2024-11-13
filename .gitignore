@@ -398,5 +398,3 @@ FodyWeavers.xsd
 *.sln.iml
 
 #Add additional VS files
-*.vcxproj
-*.vcxproj.filters
