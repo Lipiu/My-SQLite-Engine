@@ -1,46 +1,38 @@
-﻿#include<iostream>
-#include<string>
-
-
-using namespace std;
-
-
-void comanda(char m[256]) {
-	const char* matrix[15][30] = {
-	{"SELECT","SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloană = valoare]"},
-
-	{"INSERT","INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, și au numărul și ordinea exacta ca definiția tabelului;"},
-
-	{"UPDATE","UPDATE nume_tabela SET nume_coloană = valoare WHERE nume_coloană = valoare"},
-	{"CREATE","CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), …) - the command should receive at least 1 column;"}
-	};
-
-	for (int j = 0; j < 3; j++) {
-		if (strcmp(m, matrix[j][0]) == 0) {
-			cout << matrix[j][1] << endl;
-			return;
-		}
-	}
-	cout << "Introduceti o comanda valida" << endl;;
-
-
-}
+﻿#include <iostream>
+#include "TABLE.h"
+#include "COLUMN.h"
 
 int main() {
-	char input[256];
-	const char valid[5] = "0";
-	cout << "ENTER A COMMAND (0 to stop) : ";
-	cin >> input;
+    try {
+        // Create columns
+        Column col1("id", "integer", 1000, "0");
+        Column col2("nume", "text", 128, "");
+        Column col3("grupa", "text", 50, "1000");
 
+        // Display column info for testing
+        std::cout << "Testing individual columns:" << std::endl;
+        col1.printInfo();
+        col2.printInfo();
+        col3.printInfo();
 
-	while (strcmp(input, valid) != 0) {
-		if (strcmp(input, valid) != 0)
-			comanda(input);
-		cout << "ENTER A COMMAND (0 to stop) : ";
-		cin >> input;
+        // Create array of columns
+        Column columns[] = { col1, col2, col3 };
 
-	}
+        // Create a table using columns
+        std::cout << "\nCreating table:" << std::endl;
+        Table table("students", columns, 3);
 
+        // Print table info
+        std::cout << "\nDisplaying table info:" << std::endl;
+        table.printTableInfo();
 
+    }
+    catch (const char* ex) {
+        std::cerr << "\nException: " << ex << std::endl;
+    }
+    catch (const std::exception& ex) {
+        std::cerr << "\nException: " << ex.what() << std::endl;
+    }
 
+    return 0;
 }

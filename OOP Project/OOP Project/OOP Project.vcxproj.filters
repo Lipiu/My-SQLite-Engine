@@ -20,7 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CREATE_TABLE.h">
+    <ClInclude Include="TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COLUMN.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
