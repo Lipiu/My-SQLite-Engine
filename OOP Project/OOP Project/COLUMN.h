@@ -18,6 +18,12 @@ private:
 	string defaultValue = "";
 
 public:
+	//static variables for "magic values"
+	static int NAME_MIN_SIZE;
+	static int MIN_SIZE;
+	static int MAX_DIMENSION;
+
+public:
 	//default constructor
 	Column() {
 		cout << endl << "Default constructor";
@@ -67,7 +73,7 @@ public:
 
 	//setters
 	void setName(string newName){
-		if (newName.empty() || newName.length() < 0)
+		if (newName.empty() || newName.length() < NAME_MIN_SIZE)
 			throw "Invalid name!";
 		this->name = newName;
 	}
@@ -79,7 +85,7 @@ public:
 	}
 
 	void setSize(int newSize){
-		if (newSize <= 0)
+		if (newSize <= MIN_SIZE)
 			throw "Column size must be bigger than 0!";
 		this->size = newSize;
 	}
@@ -93,9 +99,8 @@ public:
 			}
 		}
 		else if(this->type == "text"){
-			int maxDimension = 50; //have to fix this variable
-			if (newDefaultValue.length() > maxDimension)
-				throw "Default value exceeds the allowed dimension for text type!";
+			if (newDefaultValue.length() > MAX_DIMENSION)
+				throw "Default value exceeds the allowed dimension for text type (50).";
 		}
 		this->defaultValue = newDefaultValue;
 	}
@@ -106,5 +111,10 @@ public:
 		cout << "Column type: " << this->type << endl;
 		cout << "Column size: " << this->size << endl;
 		cout << "Default value: " << this->defaultValue << endl;
+		cout << endl;
 	}
 };
+
+int Column::NAME_MIN_SIZE = 0;
+int Column::MIN_SIZE = 0;
+int Column::MAX_DIMENSION = 50;

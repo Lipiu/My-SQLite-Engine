@@ -59,7 +59,7 @@ public:
 	void setColumns(Column* cols, int count) {
 		if (cols == nullptr || count <= 0)
 			throw "Invalid columns or count!";
-
+		
 		delete[] this->columns;
 		this->columns = nullptr;
 
