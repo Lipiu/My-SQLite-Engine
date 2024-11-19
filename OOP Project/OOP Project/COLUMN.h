@@ -5,9 +5,7 @@
 using namespace std;
 
 /*TO DO : 
-1. change "magic numbers" to static variables
-	fix in setDefaultValues the variable maxDimension
-2. set specific throw in setters
+1. set specific throw in setters
 */
 
 class Column {
