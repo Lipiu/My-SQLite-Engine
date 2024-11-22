@@ -19,9 +19,21 @@ public:
 
 	//copy constructor
 	Table(const Table& table) {
-		this->setTableName(table.getTableName());
-		this->setColumns(table.columns, table.columnCount);
+	
+		this->tableName = table.tableName;
+		this->columnCount = table.columnCount;
+
+		if (table.columns != nullptr && table.columnCount > 0) {
+			this->columns = new Column[table.columnCount];
+			for (int i = 0; i < table.columnCount; i++) {
+				this->columns[i] = table.columns[i]; 
+			}
+		}
+		else {
+			this->columns = nullptr; 
+		}
 	}
+
 
 	//destructor
 	~Table() {
@@ -50,9 +62,9 @@ public:
 	}
 
 	//setters
-	string setTableName(const string& newTableName) {
-		if (newTableName.empty() || newTableName.length() <= 0)
-			throw "Invalid table name";
+	void setTableName(const string& newTableName) {
+		if (newTableName.empty())
+			throw "Table name cannot be empty!";
 		this->tableName = newTableName;
 	}
 
@@ -60,8 +72,10 @@ public:
 		if (cols == nullptr || count <= 0)
 			throw "Invalid columns or count!";
 		
-		delete[] this->columns;
-		this->columns = nullptr;
+		if (this->columns) {
+			delete[] this->columns;
+			this->columns = nullptr;
+		}
 
 		this->columns = new Column[count];
 		for (int i = 0; i < count; i++)
@@ -71,10 +85,15 @@ public:
 
 	//print info
 	void printTableInfo() const {
-		std::cout << "\nTable: " << this->tableName;
-		for (int i = 0; i < columnCount; i++) {
-			std::cout << "\nColumn " << i + 1 << ":";
-			this->columns[i].printInfo();
+		if(this->columns == nullptr){
+			return;
+		}
+		else {
+			std::cout << "\nTable: " << this->tableName;
+			for (int i = 0; i < columnCount; i++) {
+				std::cout << "\nColumn " << i + 1 << ":";
+				this->columns[i].printInfo();
+			}
 		}
 	}
 };
