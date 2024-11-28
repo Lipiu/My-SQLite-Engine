@@ -1,10 +1,28 @@
-﻿#include<iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
 #include<string>
 
 
 using namespace std;
 
+	//void vectorizare(char m[256], char *vector[20]) {
+	//
+	//	int i=0;
+	//	char* p = strtok(m, " ");
+	//	while (p != NULL)
+	//	{
+	//		vector[i] = new char[strlen(p)+1];
+	//		if (vector[i] == NULL) {
+	//			throw "MEMORY ALLOCATION FAILED";
+	//		}
+	//		strcpy(vector[i], p);
+	//		p = strtok(NULL, " ");
+	//		cout << p;
+	//		i++;
+	//	}
+	//	vector[i] = NULL;
 
+	//}
 void comanda(char m[256]) {
 	const char* matrix[15][30] = {
 	{"SELECT","SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloană = valoare]"},
@@ -29,18 +47,19 @@ void comanda(char m[256]) {
 int main() {
 	char input[256];
 	const char valid[5] = "0";
+	char* vectorulMeu[20];
 	cout << "ENTER A COMMAND (0 to stop) : ";
 	cin >> input;
-
+	//vectorizare(input, vectorulMeu);
 
 	while (strcmp(input, valid) != 0) {
 		if (strcmp(input, valid) != 0)
 			comanda(input);
 		cout << "ENTER A COMMAND (0 to stop) : ";
 		cin >> input;
-
+	
 	}
-
+	
 
 
 }
