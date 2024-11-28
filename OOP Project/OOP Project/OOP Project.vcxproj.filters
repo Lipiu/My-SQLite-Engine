@@ -23,5 +23,11 @@
     <ClInclude Include="CREATE_TABLE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="COLUMN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CREATE_INDEX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -130,6 +130,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="COLUMN.h" />
+    <ClInclude Include="CREATE_INDEX.h" />
     <ClInclude Include="CREATE_TABLE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

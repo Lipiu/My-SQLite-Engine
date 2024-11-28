@@ -1,117 +1,99 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "COLUMN.h"
+using namespace std;
 
-class Table {
+class Table{
 private:
-    int rows = 0;
-    int columns = 0;
-    int** dynamic_matrix = nullptr;
-    std::string name = "";
-
-    //function to dynamically allocate the matrix
-    void allocateDynamicMatrix() {
-        dynamic_matrix = new int* [rows];
-        for (int i = 0; i < rows; i++) {
-            dynamic_matrix[i] = new int[columns];
-            for (int j = 0; j < columns; j++)
-                dynamic_matrix[i][j] = 0;
-        }
-    }
+	string tableName = "";
+	Column* columns = nullptr;
+	int columnCount = 0;
 
 public:
-    //CONSTRUCTOR
-    Table(int rows, int columns, const std::string& name) {
-        this->setRows(rows);
-        this->setColumns(columns);
-        this->setName(name);
-        //name has & to avoid creating a copy of it
-        this->allocateDynamicMatrix();
-    }
+	//constructor with parameters
+	Table(const string& name, Column* columns, int count) {
+		this->setTableName(name);
+		this->setColumns(columns, count);
+	}
 
-    //COPY CONSTRUCTOR
-    Table(const Table& table) {
-        this->rows = table.rows;
-        this->columns = table.columns;
-        this->name = table.name;
+	//copy constructor
+	Table(const Table& table) {
+	
+		this->tableName = table.tableName;
+		this->columnCount = table.columnCount;
 
-        //Allocate memory for the new matrix
-        this->allocateDynamicMatrix();
+		if (table.columns != nullptr && table.columnCount > 0) {
+			this->columns = new Column[table.columnCount];
+			for (int i = 0; i < table.columnCount; i++) {
+				this->columns[i] = table.columns[i]; 
+			}
+		}
+		else {
+			this->columns = nullptr; 
+		}
+	}
 
-        //Copy each element from the source matrix
-        for (int i = 0; i < this->rows; i++) {
-            for (int j = 0; j < this->columns; j++) {
-                this->dynamic_matrix[i][j] = table.dynamic_matrix[i][j];
-            }
-        }
-    }
 
-    //DESTRUCTOR
-    ~Table() {
-        if (this->dynamic_matrix) {
-            for (int i = 0; i < this->rows; i++)
-                delete[] this->dynamic_matrix[i];
-            delete[] this->dynamic_matrix;
-        }
-        dynamic_matrix = nullptr;
+	//destructor
+	~Table() {
+		if (this->tableName.empty())
+			cout << "Destructor called for: UNNAMED table";
+		else
+			cout << "Destructor called for: " << this->tableName;
 
-    }
+		delete[] this->columns;
+		this->columns = nullptr;
+	}
 
-    //SETTERS
-    void setRows(int rows) {
-        if (rows < 0)
-            throw std::invalid_argument("Index has to be positive!");
-        this->rows = rows;
-    }
+	//getters
+	string getTableName() const {
+		return this->tableName;
+	}
 
-    void setColumns(int columns) {
-        if (columns < 0)
-            throw std::invalid_argument("Index has to be positive!");
-        this->columns = columns;
-    }
+	Column& getColumns(int index) {
+		if (index < 0 || index >= columnCount)
+			throw "Index out of bounds!";
+		return this->columns[index];
+	}
 
-    void setName(const std::string& name) {
-        if (name.empty())
-            throw std::invalid_argument("Name cannot be empty!");
-        this->name = name;
-    }
+	int getColumnCount() {
+		return this->columnCount;
+	}
 
-    void setValue(int row, int col, int value) {
-        if (row < 0 || row >= this->rows || col < 0 || col >= this->columns) {
-            throw std::out_of_range("Index out of bounds.");
-        }
-        this->dynamic_matrix[row][col] = value;
-    }
+	//setters
+	void setTableName(const string& newTableName) {
+		if (newTableName.empty())
+			throw "Table name cannot be empty!";
+		this->tableName = newTableName;
+	}
 
-    //GETTERS
-    int getRows() {
-        return this->rows;
-    }
+	void setColumns(Column* cols, int count) {
+		if (cols == nullptr || count <= 0)
+			throw "Invalid columns or count!";
+		
+		if (this->columns) {
+			delete[] this->columns;
+			this->columns = nullptr;
+		}
 
-    int getColumns() {
-        return this->columns;
-    }
+		this->columns = new Column[count];
+		for (int i = 0; i < count; i++)
+			this->columns[i] = cols[i];
+		this->columnCount = count;
+	}
 
-    std::string getName() {
-        return this->name;
-    }
-
-    int getValue(int row, int col) const {
-        if (row < 0 || row >= this->rows || col < 0 || col >= this->columns) {
-            throw std::out_of_range("Index out of bounds.");
-        }
-        return this->dynamic_matrix[row][col];
-    }
-
-    //test printing
-    void printMatrix() const {
-        std::cout << "Table: " << this->name << "\n";
-        for (int i = 0; i < this->rows; i++) {
-            for (int j = 0; j < this->columns; j++) {
-                std::cout << this->dynamic_matrix[i][j] << " ";
-            }
-            std::cout << "\n";
-        }
-    }
-
+	//print info
+	void printTableInfo() const {
+		if(this->columns == nullptr){
+			return;
+		}
+		else {
+			std::cout << "\nTable: " << this->tableName;
+			for (int i = 0; i < columnCount; i++) {
+				std::cout << "\nColumn " << i + 1 << ":";
+				this->columns[i].printInfo();
+			}
+		}
+	}
 };
