@@ -23,9 +23,7 @@ public:
 
 public:
 	//default constructor
-	Column() {
-		cout << endl << "Default constructor";
-	}
+	Column() {}
 
 	//constructor with all parameters
 	Column(const string& name, const string& type, int size, const string& defaultValue) {
@@ -45,12 +43,7 @@ public:
 
 
 	//destructor (not needed bc we use string not char*)
-	~Column() {
-		if (this->name != "")
-			cout << "Destructor called for: " << this->name << endl;
-		else
-			cout << "Destructor called for: Unknown reason" << endl;
-	}
+	
 
 	//getters
 	string getName() const {
@@ -105,6 +98,7 @@ public:
 
 	//print function for testing
 	void printInfo() {
+		cout << endl;
 		cout << "Column name: " << this->name << endl;
 		cout << "Column type: " << this->type << endl;
 		cout << "Column size: " << this->size << endl;

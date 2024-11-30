@@ -133,6 +133,7 @@
     <ClInclude Include="COLUMN.h" />
     <ClInclude Include="CREATE_INDEX.h" />
     <ClInclude Include="CREATE_TABLE.h" />
+    <ClInclude Include="DROP_TABLE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
