@@ -29,5 +29,8 @@
     <ClInclude Include="CREATE_INDEX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DROP_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

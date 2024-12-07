@@ -37,11 +37,6 @@ public:
 
 	//destructor
 	~Table() {
-		if (this->tableName.empty())
-			cout << "Destructor called for: UNNAMED table";
-		else
-			cout << "Destructor called for: " << this->tableName;
-
 		delete[] this->columns;
 		this->columns = nullptr;
 	}
