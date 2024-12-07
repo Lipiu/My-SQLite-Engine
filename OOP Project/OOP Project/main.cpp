@@ -1,6 +1,7 @@
 ﻿#include<iostream>
 #include<string>
-
+#include "CREATE_TABLE.h"
+#include "COLUMN.h"
 int main() {
     try {
         // Create columns
@@ -12,24 +13,25 @@ using namespace std;
 
 
 void comanda(char m[256]) {
-	const char* matrix[15][30] = {
-	{"SELECT","SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloană = valoare]"},
+    const char* matrix[15][30] = {
+    {"SELECT","SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloană = valoare]"},
 
-        // Create a table using columns
-        std::cout << "\nCreating table:" << std::endl;
-        Table table("students", columns, 3);
+    // Create a table using columns
+    std::cout << "\nCreating table:" << std::endl;
+    Table table("students", columns, 3);
 
-        // Print table info
-        std::cout << "\nDisplaying table info:" << std::endl;
-        table.printTableInfo();
+    // Print table info
+    std::cout << "\nDisplaying table info:" << std::endl;
+    table.printTableInfo();
 
     }
-    catch (const char* ex) {
+        catch (const char* ex) {
         std::cerr << "\nException: " << ex << std::endl;
     }
     catch (const std::exception& ex) {
         std::cerr << "\nException: " << ex.what() << std::endl;
     }
+}
 
 int main() {
 	char input[256];
