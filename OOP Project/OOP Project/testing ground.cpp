@@ -1,3 +1,6 @@
+
+//THIS FILE IS TEMPORARY AND WILL BE DELETED IN THE FINAL VERSION OF THE PROJECT
+
 #include <iostream>
 #include <string>
 #include "COLUMN.h"
