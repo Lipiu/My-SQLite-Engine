@@ -9,11 +9,11 @@ class DROP {
 public:
 	void dropTable(Table*& table) {
 		if (table != nullptr) {
-			cout << "Table to delete: " << table->getTableName() << endl;
+			std::cout << "Table to delete: " << table->getTableName() << std::endl;
 			delete table;
 			table = nullptr;
 		}
 		else
-			cout << "Wrong command...";
+			std::cout << "Wrong command...";
 	}
 };

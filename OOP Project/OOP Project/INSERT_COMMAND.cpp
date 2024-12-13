@@ -4,7 +4,6 @@
 #include <string>
 #include "CREATE_TABLE.h" 
 
-using namespace std;
 
 //Example of insert command : INSERT INTO studenti VALUES (1,”John”,”1001”)
 
@@ -12,16 +11,16 @@ using namespace std;
 void InsertCommand(char* command, Table& table) {
     const char* keyword = "INSERT INTO ";
 
-    
+
     //We check if the command is written properly   
 
 
     if (strncmp(command, keyword, strlen(keyword)) != 0) {
         throw "Invalid command. INSERT INTO expected.";
     }
-    
 
-    
+
+
     char* valuesStart = strstr(command, "VALUES(");
     if (!valuesStart) {
         throw "Missing VALUES keyword or syntax error.";
@@ -37,7 +36,7 @@ void InsertCommand(char* command, Table& table) {
 
     // Parse the values
     char* token = strtok(valuesStart, ",");
-    string* parsedValues = new string[table.getColumnCount()];
+    std::string* parsedValues = new std::string[table.getColumnCount()];
     int count = 0;
 
     while (token && count < table.getColumnCount()) {
@@ -52,11 +51,11 @@ void InsertCommand(char* command, Table& table) {
     }
 
 
-    cout << "Insert command processed successfully with values: ";
+    std::cout << "Insert command processed successfully with values: ";
     for (int i = 0; i < table.getColumnCount(); ++i) {
-        cout << parsedValues[i] << (i == table.getColumnCount() - 1 ? "\n" : ", ");
+        std::cout << parsedValues[i] << (i == table.getColumnCount() - 1 ? "\n" : ", ");
     }
 
-    
+
     delete[] parsedValues;
 }

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <string.h>
-using namespace std;
+
 
 /*TO DO : 
 1. set specific throw in setters
@@ -10,10 +10,10 @@ using namespace std;
 
 class Column {
 private:
-	string name = "";
-	string type = "";
+	std::string name = "";
+	std::string type = "";
 	int size = 0;
-	string defaultValue = "";
+	std::string defaultValue = "";
 
 public:
 	//static variables for "magic values"
@@ -26,7 +26,7 @@ public:
 	Column() {}
 
 	//constructor with all parameters
-	Column(const string& name, const string& type, int size, const string& defaultValue) {
+	Column(const std::string& name, const std::string& type, int size, const std::string& defaultValue) {
 		this->setName(name);
 		this->setType(type);
 		this->setSize(size);
@@ -46,11 +46,11 @@ public:
 	
 
 	//getters
-	string getName() const {
+	std::string getName() const {
 		return this->name;
 	}
 
-	string getType() {
+	std::string getType() {
 		return this->type;
 	}
 
@@ -58,18 +58,18 @@ public:
 		return this->size;
 	}
 
-	string getDefaultValue() {
+	std::string getDefaultValue() {
 		return this->defaultValue;
 	}
 
 	//setters
-	void setName(string newName){
+	void setName(std::string newName){
 		if (newName.empty() || newName.length() < NAME_MIN_SIZE)
 			throw "Invalid name!";
 		this->name = newName;
 	}
 
-	void setType(string newType) {
+	void setType(std::string newType) {
 		if (newType != "integer" && newType != "text")
 			throw "Invalid type. Please enter integer or text!";
 		this->type = newType;
@@ -81,7 +81,7 @@ public:
 		this->size = newSize;
 	}
 
-	void setDefaultValue(string newDefaultValue) {
+	void setDefaultValue(std::string newDefaultValue) {
 		if (this->type == "integer") {
 			for (int i = 0; i < newDefaultValue.length(); i++) {
 				char c = newDefaultValue[i];
@@ -98,12 +98,12 @@ public:
 
 	//print function for testing
 	void printInfo() {
-		cout << endl;
-		cout << "Column name: " << this->name << endl;
-		cout << "Column type: " << this->type << endl;
-		cout << "Column size: " << this->size << endl;
-		cout << "Default value: " << this->defaultValue << endl;
-		cout << endl;
+		std::cout << std::endl;
+		std::cout << "Column name: " << this->name << std::endl;
+		std::cout << "Column type: " << this->type << std::endl;
+		std::cout << "Column size: " << this->size << std::endl;
+		std::cout << "Default value: " << this->defaultValue << std::endl;
+		std::cout << std::endl;
 	}
 };
 

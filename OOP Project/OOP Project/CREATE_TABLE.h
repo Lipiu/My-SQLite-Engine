@@ -2,17 +2,16 @@
 #include <iostream>
 #include <string>
 #include "COLUMN.h"
-using namespace std;
 
 class Table{
 private:
-	string tableName = "";
+	std::string tableName = "";
 	Column* columns = nullptr;
 	int columnCount = 0;
 
 public:
 	//constructor with parameters
-	Table(const string& name, Column* columns, int count) {
+	Table(const std::string& name, Column* columns, int count) {
 		this->setTableName(name);
 		this->setColumns(columns, count);
 	}
@@ -42,7 +41,7 @@ public:
 	}
 
 	//getters
-	string getTableName() const {
+	std::string getTableName() const {
 		return this->tableName;
 	}
 
@@ -57,7 +56,7 @@ public:
 	}
 
 	//setters
-	void setTableName(const string& newTableName) {
+	void setTableName(const std::string& newTableName) {
 		if (newTableName.empty())
 			throw "Table name cannot be empty!";
 		this->tableName = newTableName;
