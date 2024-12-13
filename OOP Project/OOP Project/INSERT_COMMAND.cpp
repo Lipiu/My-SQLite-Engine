@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
-#include "CREATE_TABLE.h" 
+#include "TABLE.h" 
 
 
 //Example of insert command : INSERT INTO studenti VALUES (1,”John”,”1001”)

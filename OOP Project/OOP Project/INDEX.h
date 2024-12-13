@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
-#include "CREATE_TABLE.h"
+#include "TABLE.h"
 
 class Index {
 private:

@@ -26,16 +26,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CREATE_TABLE.h">
+    <ClInclude Include="TABLE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="COLUMN.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CREATE_INDEX.h">
+    <ClInclude Include="INDEX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DROP_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DATABASE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="COMMAND_PARSER.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

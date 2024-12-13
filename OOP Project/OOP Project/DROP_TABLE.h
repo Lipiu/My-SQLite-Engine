@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "COLUMN.h"
-#include "CREATE_TABLE.h"
+#include "TABLE.h"
 
 //have to implement: choose which table to delete
 
