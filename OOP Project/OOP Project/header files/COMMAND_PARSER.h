@@ -7,29 +7,11 @@
 
 using namespace std;
 
-void free_vector(char* vector[20])
-//Frees the command vector 
-{
-    for (int i = 0; vector[i] != NULL; ++i) {
-        delete[] vector[i];
-    }
-}
 
-void vectorizare(char m[256], char* vector[20])
-//takes the command input and creates a vector with each individual term 
-{
-    int i = 0;
-    char* p = strtok(m, " ");
-    while (p != NULL) {
-        vector[i] = new char[strlen(p) + 1];
-        strcpy(vector[i], p);
-        p = strtok(NULL, " ");
-        i++;
-    }
-    vector[i] = NULL;
-}
 
-void comanda(char m[256]) {
+class Command_parser {
+    char* vector[20] = { nullptr };
+    int nrvector = 0;
     const char* matrix[4][2] = {
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
         {"INSERT", "INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, ?i au num?rul ?i ordinea exacta ca defini?ia tabelului;"},
@@ -37,42 +19,92 @@ void comanda(char m[256]) {
         {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), …) - the command should receive at least 1 column;"}
     };
 
-    for (int j = 0; j < 4; j++) {
-        if (strcmp(m, matrix[j][0]) == 0) {
-            cout << matrix[j][1] << endl;
-            return;
-        }
+
+
+
+public:
+
+    Command_parser(const char* comanda) {
+        this->setVector(comanda);
     }
-    cout << "Introduceti o comanda valida" << endl;
-}
-
-int main() {
-    char input[256];
-    char* vectorulMeu[20];
-
-    while (true) {
-        cout << "ENTER A COMMAND (0 to stop): ";
-        cin.get(input, 256);
-        cin.get(); // Clear the newline from the input buffer
-
-        if (strcmp(input, "0") == 0) {
-            break;
+    ~Command_parser() {
+        //cout << "DISTRUGERE";
+        for (int i = 0; i < this->nrvector; i++) {
+            if (this->vector[i] != nullptr)
+                delete[] this->vector[i];
+            this->vector[i] = nullptr;
         }
 
-        vectorizare(input, vectorulMeu);//SEPARATES THE COMMANDS INTO INDIVIDUAL TERMS CORRESPONDING TO VECTOR INDEXES FOR EASIER ACCES
+        //vector deletion
 
-        for (int i = 0; vectorulMeu[i] != NULL; i++) {
-            cout << vectorulMeu[i] << endl; // Print each term of the whole command - is temporary just for testing purposes
-        }
+        this->nrvector = 0;
 
-        comanda(vectorulMeu[0]);
-
-        free_vector(vectorulMeu);
     }
 
-    return 0;
-}
-//TO DO:
-//BETTER MEMORY ALLOCATION
-//IMPLEMENT EVERY COMMAND 
-//CREATE A SWITCH CASE TO HANDLE THE ERRORS IN THE COMMAND'S CLASS
+    void setVector(const char* input) {
+        char* tempV[20] = { nullptr }; // vector temporar 
+        if (input == nullptr)
+            throw "Introduceti o comanda";
+        //AM CREAT O COMANDA TEMPORARA
+        char* tempCom = new char[strlen(input) + 1];
+        strcpy(tempCom, input);
+        int i = 0;
+        char* p = strtok(tempCom, " "); //AM DESPARTIT COMANDA IN TERMINI INDIVIDUALI
+        while (p != NULL) {
+            tempV[i] = new char[strlen(p) + 1]; //aloc spatiu unui termen din vectorul temporar , si apoi il setez
+            strcpy(tempV[i], p);
+            p = strtok(NULL, " ");
+            i++;
+        }
+        //tempV[i] = NULL;
+        int nr = i; //AM TERMINAT DE SETAT VECTORUL TEMPORAR
+
+        delete[] tempCom; //AM DAT DELETE LA COMANDA TEMPORARA
+
+        //VALIDARE A COMENZII:
+        for (int j = 0; j < 4; j++) {
+            if (strcmp(tempV[0], this->matrix[j][0]) == 0) {
+                cout << this->matrix[j][1] << endl;
+                for (int i = 0; i < nr; i++) {
+                    this->vector[i] = new char(strlen(tempV[i]) + 1);
+                    strcpy(this->vector[i], tempV[i]);
+                }
+                this->vector[i] = NULL;
+                this->nrvector = nr;
+                j = 5;
+            }
+            else {
+                cout << "Intordu o comanda valida";
+                j = 5;
+            }
+        }
+        for (int i = 0; i < nr; i++)
+            if (tempV[i] != nullptr)
+                delete tempV[i];
+    }
+    char** getVector() {
+        return this->vector;
+    }
+
+
+
+
+    void coutVector() {
+        for (int i = 0; i < this->nrvector; i++)
+            cout << this->vector[i] << "--";
+        cout << endl;
+    }
+
+
+    void validation() {
+
+
+
+
+
+    }
+
+};
+
+
+
