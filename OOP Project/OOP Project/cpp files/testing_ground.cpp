@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include "COLUMN.h"
-#include "CREATE_TABLE.h"
-#include "DROP_TABLE.h"
+#include "header files/TABLE.h"
+#include "header files/DROP_TABLE.h"
 
 using namespace std;
 

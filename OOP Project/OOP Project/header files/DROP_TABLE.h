@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "COLUMN.h"
-#include "TABLE.h"
+#include "header files/COLUMN.h"
+#include "header files/TABLE.h"
 
 //have to implement: choose which table to delete
 
