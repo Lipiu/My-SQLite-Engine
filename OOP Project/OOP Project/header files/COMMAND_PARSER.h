@@ -10,7 +10,7 @@ using namespace std;
 
 
 class Command_parser {
-    char* vector[20] = { nullptr };
+    char* vector[20];
     int nrvector = 0;
     const char* matrix[4][2] = {
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
@@ -42,7 +42,7 @@ public:
     }
 
     void setVector(const char* input) {
-        char* tempV[20] = { nullptr }; // vector temporar 
+        char* tempV[20]; // vector temporar 
         if (input == nullptr)
             throw "Introduceti o comanda";
         //AM CREAT O COMANDA TEMPORARA
@@ -66,12 +66,13 @@ public:
             if (strcmp(tempV[0], this->matrix[j][0]) == 0) {
                 cout << this->matrix[j][1] << endl;
                 for (int i = 0; i < nr; i++) {
-                    this->vector[i] = new char(strlen(tempV[i]) + 1);
+                    this->vector[i] = new char[strlen(tempV[i]) + 1];
                     strcpy(this->vector[i], tempV[i]);
                 }
-                this->vector[i] = NULL;
+                this->vector[nr] = nullptr;
                 this->nrvector = nr;
-                j = 5;
+                break;
+                //j = 5;
             }
             else {
                 cout << "Intordu o comanda valida";
@@ -105,6 +106,3 @@ public:
     }
 
 };
-
-
-

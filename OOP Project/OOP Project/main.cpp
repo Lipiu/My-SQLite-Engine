@@ -11,6 +11,7 @@ void comanda() {
     char comandala[256];
     cout << "introduceti o comanda: ";
     cin.get(comandala, 256);
+    cin.get(); //solved the exit code 3
     Command_parser p(comandala);
     p.coutVector();
     //p.validation();
