@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <string.h>
-
+using namespace std;
 
 /*TO DO : 
 1. set specific throw in setters
@@ -10,10 +10,10 @@
 
 class Column {
 private:
-	std::string name = "";
-	std::string type = "";
+	string name = "";
+	string type = "";
 	int size = 0;
-	std::string defaultValue = "";
+	string defaultValue = "";
 
 	//static variables for "magic values"
 	static int NAME_MIN_SIZE;
@@ -25,7 +25,7 @@ public:
 	Column() {}
 
 	//constructor with all parameters
-	Column(const std::string& name, const std::string& type, int size, const std::string& defaultValue) {
+	Column(const string& name, const string& type, int size, const string& defaultValue) {
 		this->setName(name);
 		this->setType(type);
 		this->setSize(size);
@@ -45,11 +45,11 @@ public:
 	
 
 	//getters
-	std::string getName() const {
+	string getName() const {
 		return this->name;
 	}
 
-	std::string getType() {
+	string getType() {
 		return this->type;
 	}
 
@@ -57,18 +57,18 @@ public:
 		return this->size;
 	}
 
-	std::string getDefaultValue() {
+	string getDefaultValue() {
 		return this->defaultValue;
 	}
 
 	//setters
-	void setName(std::string newName){
+	void setName(string newName){
 		if (newName.empty() || newName.length() < NAME_MIN_SIZE)
 			throw "Invalid name!";
 		this->name = newName;
 	}
 
-	void setType(std::string newType) {
+	void setType(string newType) {
 		if (newType != "integer" && newType != "text")
 			throw "Invalid type. Please enter integer or text!";
 		this->type = newType;
@@ -80,7 +80,7 @@ public:
 		this->size = newSize;
 	}
 
-	void setDefaultValue(std::string newDefaultValue) {
+	void setDefaultValue(string newDefaultValue) {
 		if (this->type == "integer") {
 			for (int i = 0; i < newDefaultValue.length(); i++) {
 				char c = newDefaultValue[i];
@@ -97,15 +97,16 @@ public:
 
 	//print function for testing
 	void printInfo() {
-		std::cout << std::endl;
-		std::cout << "Column name: " << this->name << std::endl;
-		std::cout << "Column type: " << this->type << std::endl;
-		std::cout << "Column size: " << this->size << std::endl;
-		std::cout << "Default value: " << this->defaultValue << std::endl;
-		std::cout << std::endl;
+		cout << endl;
+		cout << "Column name: " << this->name << endl;
+		cout << "Column type: " << this->type << endl;
+		cout << "Column size: " << this->size << endl;
+		cout << "Default value: " << this->defaultValue << endl;
+		cout << endl;
 	}
 };
 
+//initialized static int variables
 int Column::NAME_MIN_SIZE = 0;
 int Column::MIN_SIZE = 0;
 int Column::MAX_DIMENSION = 50;

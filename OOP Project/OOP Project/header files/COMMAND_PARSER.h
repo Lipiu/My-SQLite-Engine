@@ -41,26 +41,26 @@ public:
     }
 
     void setVector(const char* input) {
-        char* tempV[20]; // vector temporar 
+        char* tempV[20]; // temporary vector
         if (input == nullptr)
             throw "Introduceti o comanda";
-        //AM CREAT O COMANDA TEMPORARA
+        //CREATED A TEMPORARY COMMAND
         char* tempCom = new char[strlen(input) + 1];
         strcpy(tempCom, input);
         int i = 0;
-        char* p = strtok(tempCom, " "); //AM DESPARTIT COMANDA IN TERMINI INDIVIDUALI
+        char* p = strtok(tempCom, " "); //SPLIT THE COMMAND IN INDIVIDUAL WORDS
         while (p != NULL) {
-            tempV[i] = new char[strlen(p) + 1]; //aloc spatiu unui termen din vectorul temporar , si apoi il setez
+            tempV[i] = new char[strlen(p) + 1]; //ALLOCATED SPACE FOR ONE WORD IN TEMPORARY VECTOR
             strcpy(tempV[i], p);
             p = strtok(NULL, " ");
             i++;
         }
         //tempV[i] = NULL;
-        int nr = i; //AM TERMINAT DE SETAT VECTORUL TEMPORAR
+        int nr = i; //FINISHED SETTING UP THE TEMPORARY VECTOR
 
-        delete[] tempCom; //AM DAT DELETE LA COMANDA TEMPORARA
+        delete[] tempCom; //DELETED THE TEMPORARY COMMAND
 
-        //VALIDARE A COMENZII:
+        //COMMAND VALIDATION:
         for (int j = 0; j < NUMBER_OF_COMMANDS; j++) {
             if (strcmp(tempV[0], this->matrix[j][0]) == 0) {
                 cout << this->matrix[j][1] << endl;
@@ -87,15 +87,11 @@ public:
         return this->vector;
     }
 
-
-
-
     void coutVector() {
         for (int i = 0; i < this->nrvector; i++)
             cout << this->vector[i] << "--";
         cout << endl;
     }
-
 
     void validation() {
 
