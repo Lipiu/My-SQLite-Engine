@@ -91,6 +91,9 @@ public:
     char** getVector() {
         return this->vector;
     }
+    int getComVal() {
+        return this->comVal;
+    }
     //METHODS
     void coutVector() {
         for (int i = 0; i < this->nrvector; i++)
@@ -101,11 +104,6 @@ public:
     }
 
     void validation() {
-
-
-
-
-
     }
 
 };
