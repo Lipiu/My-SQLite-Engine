@@ -61,6 +61,7 @@ public:
         delete[] tempCom; //DELETED THE TEMPORARY COMMAND
 
         //COMMAND VALIDATION:
+        bool isValidCommand = false;
         for (int j = 0; j < NUMBER_OF_COMMANDS; j++) {
             if (strcmp(tempV[0], this->matrix[j][0]) == 0) {
                 cout << this->matrix[j][1] << endl;
@@ -70,14 +71,13 @@ public:
                 }
                 this->vector[nr] = nullptr;
                 this->nrvector = nr;
+                isValidCommand = true;
                 //j = 5;
                 break;
             }
-            else {
-                cout << "Intordu o comanda valida";
-                //j = 5;
-                break;
-            }
+        }
+        if (!isValidCommand) {
+            cout << "Introduceti o comanda valida!" << endl;
         }
         for (int i = 0; i < nr; i++)
             if (tempV[i] != nullptr)
