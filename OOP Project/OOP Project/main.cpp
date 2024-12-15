@@ -23,7 +23,6 @@ int main() {
     while (true) {
         comanda();
     }
-
 }
 
 
