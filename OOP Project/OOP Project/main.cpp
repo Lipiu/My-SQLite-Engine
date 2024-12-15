@@ -19,8 +19,10 @@ void comanda() {
 
 
 int main() {
-    comanda();
-}
+    while (true) {
+        comanda();
+    }
+    }
 
 
 
