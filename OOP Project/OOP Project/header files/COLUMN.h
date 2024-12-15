@@ -15,7 +15,6 @@ private:
 	int size = 0;
 	std::string defaultValue = "";
 
-public:
 	//static variables for "magic values"
 	static int NAME_MIN_SIZE;
 	static int MIN_SIZE;

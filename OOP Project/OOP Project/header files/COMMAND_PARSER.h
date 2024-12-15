@@ -1,5 +1,4 @@
 #pragma once
-//primeste string si punem ce e in main
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
@@ -10,6 +9,7 @@ using namespace std;
 
 
 class Command_parser {
+private:
     char* vector[20];
     int nrvector = 0;
     const char* matrix[4][2] = {
@@ -19,11 +19,10 @@ class Command_parser {
         {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), …) - the command should receive at least 1 column;"}
     };
 
-
-
+    //static variables to replace the "magic" numbers
+    static int NUMBER_OF_COMMANDS;
 
 public:
-
     Command_parser(const char* comanda) {
         this->setVector(comanda);
     }
@@ -62,7 +61,7 @@ public:
         delete[] tempCom; //AM DAT DELETE LA COMANDA TEMPORARA
 
         //VALIDARE A COMENZII:
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < NUMBER_OF_COMMANDS; j++) {
             if (strcmp(tempV[0], this->matrix[j][0]) == 0) {
                 cout << this->matrix[j][1] << endl;
                 for (int i = 0; i < nr; i++) {
@@ -71,12 +70,13 @@ public:
                 }
                 this->vector[nr] = nullptr;
                 this->nrvector = nr;
-                break;
                 //j = 5;
+                break;
             }
             else {
                 cout << "Intordu o comanda valida";
-                j = 5;
+                //j = 5;
+                break;
             }
         }
         for (int i = 0; i < nr; i++)
@@ -106,3 +106,6 @@ public:
     }
 
 };
+
+//initialized static int with 4 (number of total commands)
+int Command_parser::NUMBER_OF_COMMANDS = 4;
