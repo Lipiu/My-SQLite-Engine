@@ -12,7 +12,7 @@ class Command_parser {
 private:
     char* vector[20];
     int nrvector = 0;
-    bool comVal = 0;
+    int comVal = -1;
     const char* matrix[4][2] = {
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
         {"INSERT", "INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, ?i au num?rul ?i ordinea exacta ca defini?ia tabelului;"},
@@ -75,7 +75,7 @@ public:
                 this->vector[nr] = nullptr;
                 this->nrvector = nr;
                 isValidCommand = true;
-                this->comVal = 1;
+                this->comVal = j;
                 //j = 5;
                 break;
             }
