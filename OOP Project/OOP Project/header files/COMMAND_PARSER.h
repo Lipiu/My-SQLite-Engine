@@ -12,6 +12,7 @@ class Command_parser {
 private:
     char* vector[20];
     int nrvector = 0;
+    bool comVal = 0;
     const char* matrix[4][2] = {
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
         {"INSERT", "INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, ?i au num?rul ?i ordinea exacta ca defini?ia tabelului;"},
@@ -23,6 +24,7 @@ private:
     static int NUMBER_OF_COMMANDS;
 
 public:
+    //CONSTRUCTORS AND DESTRUCTORS
     Command_parser(const char* comanda) {
         this->setVector(comanda);
     }
@@ -39,6 +41,7 @@ public:
         this->nrvector = 0;
 
     }
+    //SETTER
 
     void setVector(const char* input) {
         char* tempV[20]; // temporary vector
@@ -72,6 +75,7 @@ public:
                 this->vector[nr] = nullptr;
                 this->nrvector = nr;
                 isValidCommand = true;
+                this->comVal = 1;
                 //j = 5;
                 break;
             }
@@ -83,14 +87,17 @@ public:
             if (tempV[i] != nullptr)
                 delete tempV[i];
     }
+    //GETTER
     char** getVector() {
         return this->vector;
     }
-
+    //METHODS
     void coutVector() {
         for (int i = 0; i < this->nrvector; i++)
             cout << this->vector[i] << "--";
         cout << endl;
+        if (this->comVal == 1)
+            cout << "COMANDA ESTE VALIDA"<<endl;
     }
 
     void validation() {
