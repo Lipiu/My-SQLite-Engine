@@ -4,9 +4,11 @@
 #include <string.h>
 using namespace std;
 
-/*TO DO : 
-1. set specific throw in setters
-*/
+
+//static variables for "magic values"
+static int NAME_MIN_SIZE = 0;
+static int MIN_SIZE = 0;
+static int MAX_DIMENSION = 50;
 
 class Column {
 private:
@@ -14,11 +16,6 @@ private:
 	string type = "";
 	int size = 0;
 	string defaultValue = "";
-
-	//static variables for "magic values"
-	static int NAME_MIN_SIZE;
-	static int MIN_SIZE;
-	static int MAX_DIMENSION;
 
 public:
 	//default constructor
@@ -105,8 +102,3 @@ public:
 		cout << endl;
 	}
 };
-
-//initialized static int variables
-int Column::NAME_MIN_SIZE = 0;
-int Column::MIN_SIZE = 0;
-int Column::MAX_DIMENSION = 50;

@@ -1,5 +1,6 @@
-﻿
-#include"header files/COMMAND_PARSER.h"
+﻿#include"header files/COMMAND_PARSER.h"
+#include "header files/COMMAND_PARSER.h"
+#include "header files/CREATE.h" 
 #include <iostream>
 #include <string>
 
@@ -11,7 +12,7 @@ int main() {
     char comandala[256];
     cout << "introduceti o comanda: ";
     cin.get(comandala, 256);
-    cin.get(); //solved the exit code 3
+    cin.get(); // Solves the exit code issue when cin.get() is used after getline()
 
     Command_parser p(comandala); // Create the initial object
     int a = p.getComVal();
@@ -19,7 +20,7 @@ int main() {
     while (a < 0) {
         cout << "introduceti o comanda: ";
         cin.get(comandala, 256);
-        cin.get();
+        cin.get();  // Solves the exit code issue
 
         // Reuse the existing object and set a new vector
         p.setVector(comandala);
@@ -39,7 +40,9 @@ int main() {
         cout << "update command";
         break;
     case 3:
-        cout << "create command";
+        cout << "create command" << endl;
+        // Call the executeCreateCommand method to handle CREATE command
+        CREATE::executeCreateCommand(comandala);
         break;
     }
     char** vector = p.getVector();
