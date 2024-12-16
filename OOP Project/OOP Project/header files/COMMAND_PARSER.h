@@ -3,9 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-
 using namespace std;
-
 
 
 class Command_parser {
@@ -90,6 +88,9 @@ public:
     //GETTER
     char** getVector() {
         return this->vector;
+    }
+    int getComVal() {
+        return this->comVal;
     }
     //METHODS
     void coutVector() {
