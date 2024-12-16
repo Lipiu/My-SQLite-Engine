@@ -17,7 +17,7 @@ private:
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
         {"INSERT", "INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, ?i au num?rul ?i ordinea exacta ca defini?ia tabelului;"},
         {"UPDATE", "UPDATE nume_tabela SET nume_coloan? = valoare WHERE nume_coloan? = valoare"},
-        {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), …) - the command should receive at least 1 column;"}
+        {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), ?) - the command should receive at least 1 column;"}
     };
 
     //static variables to replace the "magic" numbers
@@ -97,7 +97,7 @@ public:
             cout << this->vector[i] << "--";
         cout << endl;
         if (this->comVal == 1)
-            cout << "COMANDA ESTE VALIDA"<<endl;
+            cout << "COMANDA ESTE VALIDA" << endl;
     }
 
     void validation() {
