@@ -1,3 +1,4 @@
+
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
@@ -15,7 +16,7 @@ private:
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
         {"INSERT", "INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, ?i au num?rul ?i ordinea exacta ca defini?ia tabelului;"},
         {"UPDATE", "UPDATE nume_tabela SET nume_coloan? = valoare WHERE nume_coloan? = valoare"},
-        {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), ?) - the command should receive at least 1 column;"}
+        {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), (column_2_name,type,size, default_value), …) - the command should receive at least 1 column;"}
     };
 
     //static variables to replace the "magic" numbers
@@ -86,8 +87,18 @@ public:
                 delete tempV[i];
     }
     //GETTER
+    int getNrvector() {
+        int nr = this->nrvector;
+        return nr;
+    }
+
     char** getVector() {
-        return this->vector;
+        char** copie = new char* [this->nrvector];  // Allocate memory for the array of char* pointers
+        for (int i = 0; i < this->nrvector; i++) {
+            copie[i] = new char[strlen(this->vector[i]) + 1];  // Allocate memory for each string
+            strcpy(copie[i], this->vector[i]);  // Copy the string from vector to copie
+        }
+        return copie;  // Return the array of char* pointers
     }
     int getComVal() {
         return this->comVal;
@@ -113,3 +124,10 @@ public:
 
 //initialized static int with 4 (number of total commands)
 int Command_parser::NUMBER_OF_COMMANDS = 4;
+
+
+
+
+
+
+
