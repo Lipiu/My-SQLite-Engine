@@ -1,117 +1,74 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <string.h>
+using namespace std;
 #include "Command_parser.h"
-#include "Table.h"
 #include "Column.h"
 
-using namespace std;
+/*
+CREATE TABLE students ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
 
-//TO DO:
-//prea multe while loops, trebuie optimizat
-//functia este in clasa, trebuie ordonat in fisier cpp
+CREATE TABLE students IF NOT EXISTS ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
+*/
+
 
 class CREATE {
+private:
+	Command_parser p;
+	char* tableName = nullptr;
+	int columnCount = 0;
+	char* vector[20];
+
 public:
-    // Method to handle the CREATE command process
-    static void executeCreateCommand(const char* input) {
-        Command_parser parser(input);  // Parse the input
+	CREATE() {
 
-        // Check if the command is "CREATE" (3 corresponds to CREATE)
-        if (parser.getComVal() == 3) {
-            string tableName;
-            int columnCount;
+	}
 
-            // Get table name from the user
-            cout << "Enter table name: ";
-            //getline(cin, tableName);
-            while (true) {
-                getline(cin, tableName);
-                if (tableName.empty()) {
-                    cout << "Table name cannot be empty. Try again: ";
-                }
-                else
-                    break;
-            }
+    // Constructor that initializes the vector from an input string
+    CREATE(const char* input) {
+        setVector(input);  // Initialize vector by splitting the input string
+    }
 
+    // Tokenizes the input string and stores words in vector
+    void setVector(const char* input) {
+        char* tempInput = new char[strlen(input) + 1];
+        strcpy(tempInput, input);
 
-            // Get the number of columns
-            cout << "Enter the number of columns: ";
-            while (true) {
-                cin >> columnCount;
-                if (columnCount <= 0) {
-                    cout << "Column count must be STRICTLY greater than 0. Try a positive integer: ";
-                    continue;
-                }
-                break;
-            }
+        int i = 0;
+        char* token = strtok(tempInput, " ");  // Tokenize the input string
+        while (token != nullptr) {
+            this->vector[i] = new char[strlen(token) + 1];
+            strcpy(this->vector[i], token);  // Store each word in the vector
+            i++;
+            token = strtok(nullptr, " ");  // Get the next word
+        }
 
-            // Create an array of columns
-            Column* columns = new Column[columnCount];
-            cin.ignore();  // To ignore leftover newline character after integer input
+        // Clean up
+        delete[] tempInput;
+    }
 
-            for (int i = 0; i < columnCount; ++i) {
-                string name, type, defaultValue;
-                int size;
-
-                cout << "Column " << i + 1 << ":\n";
-
-                // Input column name
-                cout << "Enter column name: ";
-
-                getline(cin, name);
-
-                // Input column type (either "integer" or "text")
-                cout << "Enter column type (integer/text): ";
-                while (true) {
-                    getline(cin, type);
-                    if (type == "integer" || type == "text") {
-                        break;
-                    }
-                    cout << "Invalid type! Please enter 'integer' or 'text': ";
-                }
-
-                // Input column size (for integer it's the size of the number, for text it's the string length)
-                cout << "Enter column size: ";
-                while (true) {
-                    cin >> size;
-                    if (size <= 0) {
-                        cout << "Size must be greater than 0. Try again: ";
-                        continue;
-                    }
-                    break;
-                }
-                cin.ignore();  // To ignore leftover newline character after integer input
-
-                // Input default value (for "integer" it must be a valid integer, for "text" it's a string)
-                cout << "Enter default value: ";
-                getline(cin, defaultValue);
-
-                try {
-                    // Create and set column details
-                    Column column(name, type, size, defaultValue);
-                    columns[i] = column;
-                }
-                catch (const char* error) {
-                    cout << "Error: " << error << endl;
-                    --i;  // Retry the current column if there's an error
-                }
-            }
-
-            // Now that we have all the columns, create a Table object
-            try {
-                Table table(tableName, columns, columnCount);
-                table.printTableInfo();  // Display the created table information
-            }
-            catch (const char* error) {
-                cout << "Error creating table: " << error << endl;
-            }
-
-            // Clean up dynamic memory for columns
-            delete[] columns;
+    // Method to verify if the second word is "TABLE"
+    void verifica() {
+        if (this->vector[1] != nullptr && strcmp(this->vector[1], "TABLE") == 0) {
+            cout << "DA COAIEEEEEEEEEE" << endl;
         }
         else {
-            cout << "Invalid command. Please use a CREATE command.\n";
+            cout << ":(" << endl;
+        }
+    }
+
+    // Getter for vector
+    char** getVector() {
+        return this->vector;
+    }
+
+    // Destructor to clean up allocated memory
+    ~CREATE() {
+        for (int i = 0; i < 20; i++) {
+            if (this->vector[i] != nullptr) {
+                delete[] this->vector[i];
+            }
         }
     }
 };

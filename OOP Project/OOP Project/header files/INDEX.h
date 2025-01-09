@@ -11,7 +11,7 @@ private:
     Table* table;
 
 public:
-    // ctor
+    // constructor
     Index(const std::string& indexName, const std::string& columnName, Table* table) {
         this->setIndexName(indexName);
         this->setColumnName(columnName);

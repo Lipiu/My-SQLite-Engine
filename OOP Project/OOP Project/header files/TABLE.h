@@ -79,15 +79,24 @@ public:
 
 	//print info
 	void printTableInfo() const {
-		if(this->columns == nullptr){
+		if (this->columns == nullptr)
 			return;
-		}
-		else {
-			std::cout << "\nTable: " << this->tableName;
-			for (int i = 0; i < columnCount; i++) {
-				std::cout << "\nColumn " << i + 1 << ":";
-				this->columns[i].printInfo();
-			}
+
+		cout << "\ntabela/table: " << endl;
+		cout << "coloane/columns: " << endl;
+	
+		for (int i = 0; i < columnCount; i++) {
+			cout << "coloana " << i + 1 << "/column " << i + 1 << ":" << endl;
+			cout << "denumire/name: " << this->columns[i].getName();
+			cout << "tip/type: ";
+			if (this->columns[i].getType() == "integer")
+				cout << "numeric";
+			else
+				cout << this->columns[i].getType();
+			cout << "\n";
+
+			cout << "dimensiune/dimension: " << this->columns[i].getSize() << endl;
+			cout << "default: " << this->columns[i].getDefaultValue() << endl;
 		}
 	}
 };

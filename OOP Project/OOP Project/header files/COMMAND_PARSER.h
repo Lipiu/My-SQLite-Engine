@@ -23,10 +23,14 @@ private:
     static int NUMBER_OF_COMMANDS;
 
 public:
+    //Default constructor
+    Command_parser(){}
+
     //CONSTRUCTORS AND DESTRUCTORS
     Command_parser(const char* comanda) {
-        this->setVector(comanda);
+        this->modifyCommand(comanda);
     }
+
     ~Command_parser() {
         //cout << "DISTRUGERE";
         for (int i = 0; i < this->nrvector; i++) {
@@ -40,8 +44,46 @@ public:
         this->nrvector = 0;
 
     }
-    //SETTER
 
+    void modifyCommand(const char* input) {
+        char* copy = new char[strlen(input) + 1];
+        int pozitie = -1;
+
+        // Find the first '('
+        for (int i = 0; i < strlen(input); i++) {
+            if (input[i] == '(') {
+                pozitie = i;
+                break;
+            }
+        }
+
+        // If '(' is not found, consider the entire input
+        if (pozitie == -1) {
+            pozitie = strlen(input);
+        }
+
+        // Copy characters up to '(', preserving spaces
+        int j = 0;
+        for (int i = 0; i < pozitie; i++) {
+            copy[j++] = input[i];
+        }
+
+        // Copy characters from '(' onward, skipping spaces
+        for (int i = pozitie; i < strlen(input); i++) {
+            if (input[i] != ' ') {
+                copy[j++] = input[i];
+            }
+        }
+
+        copy[j] = '\0';
+
+        // Free dynamically allocated memory
+        this->setVector(copy);
+        delete[] copy;
+    }
+
+
+    //SETTER
     void setVector(const char* input) {
         char* tempV[20]; // temporary vector
         if (input == nullptr)

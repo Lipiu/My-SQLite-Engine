@@ -13,6 +13,7 @@ int main() {
     cout << "introduceti o comanda: ";
     cin.get(comandala, 256);
     cin.get(); // Solves the exit code issue when cin.get() is used after getline()
+    
 
     Command_parser p(comandala); // Create the initial object
     int a = p.getComVal();
@@ -41,15 +42,16 @@ int main() {
         break;
     case 3:
         cout << "create command" << endl;
+        
+        CREATE create("CREATE TABLE LALALALALALA");
         // Call the executeCreateCommand method to handle CREATE command
-        CREATE::executeCreateCommand(comandala);
         break;
     }
     char** vector = p.getVector();
     cout << endl;
-    /* -> TESTING
+     //-> TESTING
     for (i = 0; i < p.getNrvector(); i++)
         cout << "COPIE VECTOR: " << vector[i] << endl;
-    */
+    
     return 0;
 }
