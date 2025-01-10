@@ -7,6 +7,7 @@ using namespace std;
 #include "Column.h"
 
 /*
+* VALID COMMANDS EXAMPLES:
 CREATE TABLE students ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
 
 CREATE TABLE students IF NOT EXISTS ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
@@ -36,8 +37,8 @@ public:
         }
         this->vector[nrCuv] = nullptr;
         //VERIFICATION METHODS
-        verificaTABLE();
-        verificaNume();
+        verifySecondWordTable();
+        verifyTableName();
     }
 
     ~CREATE() {
@@ -52,32 +53,42 @@ public:
         vector = nullptr;  // Optional: Set vector to nullptr after deletion
     }
 
-        //method
-
-      
 
     // Method to verify if the second word is "TABLE"
-    void verificaTABLE() {
+    void verifySecondWordTable() {
         if (this->vector[1] != nullptr && strcmp(this->vector[1], "TABLE") == 0) {
-            cout << "merge" << endl;
+            cout << "TABLE este al doilea cuvant..." << endl;
         }
         else {
-            cout << "Command typing error" << endl;
+            cout << "Eroare. TABLE nu este al doilea cuvant..." << endl;
         }
     }
-    void verificaNume() {
-        if (this->vector[2] != nullptr ) {
-            cout << "merge" << endl;
-        }
-        else {
-            cout << "Table needs a valid name" << endl;
-        }
 
+    // Method to verify if the name exists and is valid
+    /*
+    * The table name cannot start with a digit but can have one if it is not the first character
+    * 1table -> invalid
+    * table1 -> valid
+    */
+    void verifyTableName() {
+        if (this->vector[2] != nullptr) {
+            char* tableName = this->vector[2];
+
+            if (tableName[0] >= '0' && tableName[0] <= '9') {
+                cout << "Table name cannot start with digits." << endl;
+                return;
+            }
+            else
+                cout << "Valid table name." << endl;
+        }
+        else
+            cout << "Name does not exist." << endl;
     }
+
 
     // Getter for vector
     char** getVector() {
         return this->vector;
     }
-    
+
 };
