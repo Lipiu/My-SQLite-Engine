@@ -15,27 +15,24 @@ CREATE TABLE students IF NOT EXISTS ((id, integer, 1000, 0), (nume, text, 128, '
 
 class CREATE {
 private:
-	Command_parser p;
+    Command_parser p;
 	char* tableName = nullptr;
 	int columnCount = 0;
-	char* vector[20];
+	char** vector;
+    int nrCuv = 0;
 
 public:
-	CREATE() {
-
+    //constructor
+	CREATE(Command_parser f) {
+      //setVectorFromCommandParser(p);
+        this->vector = f.getVector();
+        this->nrCuv = f.getNrvector();
+        
 	}
-
-    // Constructor that initializes the vector from an input string
-    CREATE(const char* input) {
-        setVector(input);  // Initialize vector by splitting the input string
-    }
-
-    ~CREATE() {
-        for (int i = 0; i < 20; i++) {
-            if (this->vector[i] != nullptr) {
-                delete[] this->vector[i];
-            }
-        }
+    ~CREATE() { 
+        for (int i = 0; i < nrCuv; i++)
+        { delete[] vector[i]; }
+        delete[] vector;
     }
 
     // Tokenizes the input string and stores words in vector
@@ -71,4 +68,12 @@ public:
         return this->vector;
     }
 
+    // Destructor to clean up allocated memory
+    ~CREATE() {
+        for (int i = 0; i < 20; i++) {
+            if (this->vector[i] != nullptr) {
+                delete[] this->vector[i];
+            }
+        }
+    }
 };
