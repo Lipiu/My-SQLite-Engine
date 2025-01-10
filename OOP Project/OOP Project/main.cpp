@@ -41,17 +41,14 @@ int main() {
         cout << "update command";
         break;
     case 3:
-        cout << "create command" << endl;
-        
-        CREATE create("CREATE TABLE LALALALALALA");
+        //cout << "create command" << endl;
+        CREATE c(p);
+        c.verifica();
         // Call the executeCreateCommand method to handle CREATE command
         break;
     }
     char** vector = p.getVector();
     cout << endl;
      //-> TESTING
-    for (i = 0; i < p.getNrvector(); i++)
-        cout << "COPIE VECTOR: " << vector[i] << endl;
-    
     return 0;
 }
