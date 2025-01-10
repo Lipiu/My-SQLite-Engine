@@ -1,55 +1,41 @@
-﻿#include"header files/COMMAND_PARSER.h"
-#include "header files/COMMAND_PARSER.h"
-#include "header files/CREATE.h" 
+﻿#include "header files/COMMAND_PARSER.h"
+#include "header files/CREATE.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
 int main() {
-    int i;
-
     char comandala[256];
-    cout << "introduceti o comanda: ";
-    cin.get(comandala, 256);
-    cin.get(); // Solves the exit code issue when cin.get() is used after getline()
+    cout << "Enter a command: ";
+    cin.getline(comandala, 256);
 
+    Command_parser p(comandala);
+    int commandValue = p.getComVal();
 
-    Command_parser p(comandala); // Create the initial object
-    int a = p.getComVal();
-
-    while (a < 0) {
-        cout << "introduceti o comanda: ";
-        cin.get(comandala, 256);
-        cin.get();  // Solves the exit code issue
-
-        // Reuse the existing object and set a new vector
+    // Ensure a valid command is provided
+    while (commandValue < 0) {
+        cout << "Enter a valid command: ";
+        cin.getline(comandala, 256);
         p.setVector(comandala);
-        a = p.getComVal();
+        commandValue = p.getComVal();
     }
 
-    //cout << p.getComVal() << endl; -> TESTING
+    if (commandValue == 3) { // CREATE command
+        CREATE createCommand(p);
 
-    switch (p.getComVal()) {
-    case 0:
-        cout << "select command";
-        break;
-    case 1:
-        cout << "insert command";
-        break;
-    case 2:
-        cout << "update command";
-        break;
-    case 3:
-        //cout << "create command" << endl;
-        CREATE c(p);
+        cout << "Testing verificaTABLE method:" << endl;
+        createCommand.verificaTABLE();
 
-        // Call the executeCreateCommand method to handle CREATE command
-        break;
+        cout << "Testing verificaNume method:" << endl;
+        createCommand.verificaNume();
+
+        //cout << "Testing parseColumn method:" << endl;
+        //createCommand.parseColumn();     
+
+        cout << "Displaying parsed columns:" << endl;
+        createCommand.displayColumns();
     }
-    char** vector = p.getVector();
-    p.coutVector();
-    cout << endl;
-    //-> TESTING
+
     return 0;
 }

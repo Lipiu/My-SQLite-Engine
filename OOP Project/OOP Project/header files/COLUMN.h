@@ -79,19 +79,30 @@ public:
 	}
 
 	void setDefaultValue(string newDefaultValue) {
+		cout << "Setting default value: " << newDefaultValue << " for type: " << this->type << endl;
+
 		if (this->type == "integer") {
-			for (int i = 0; i < newDefaultValue.length(); i++) {
+			if (newDefaultValue.empty()) {
+				throw "Default value for integer type cannot be empty!";
+			}
+
+			// Ensure all characters in newDefaultValue are numeric
+			for (size_t i = 0; i < newDefaultValue.length(); i++) {
 				char c = newDefaultValue[i];
-				if (c < '0' || c > '9') //compare to ASCII values
+				if (c < '0' || c > '9') { // Compare to ASCII values
 					throw "Invalid default value for integer type!";
+				}
 			}
 		}
-		else if(this->type == "text"){
-			if (newDefaultValue.length() > MAX_DIMENSION)
-				throw "Default value exceeds the allowed dimension for text type (50).";
+		else if (this->type == "text") {
+			if (newDefaultValue.length() > MAX_DIMENSION) {
+				throw "Default value exceeds the allowed dimension for text!";
+			}
 		}
 		this->defaultValue = newDefaultValue;
 	}
+
+
 
 	//print function for testing
 	void printInfo() {

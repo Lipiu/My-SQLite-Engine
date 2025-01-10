@@ -10,85 +10,145 @@ using namespace std;
 * VALID COMMANDS EXAMPLES:
 CREATE TABLE students ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
 
+
 CREATE TABLE students IF NOT EXISTS ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
 */
-
 
 class CREATE {
 private:
     Command_parser p;
     char* tableName = nullptr;
     int columnCount = 0;
-    char** vector;
+    char** vector = nullptr;
     int nrCuv = 0;
+    Column* columns = nullptr;
 
-public:
+
     //constructor
+public:
     CREATE(Command_parser& f) {
         //setVectorFromCommandParser(p);
         this->nrCuv = f.getNrvector();
         //this->vector = f.getVector();
         char** sourceVector = f.getVector();
 
-        this->vector = new char* [nrCuv+1];
+        this->vector = new char* [nrCuv + 1];
         for (int i = 0; i < nrCuv; i++) {
             this->vector[i] = new char[strlen(sourceVector[i]) + 1];
             strcpy(this->vector[i], sourceVector[i]);
         }
         this->vector[nrCuv] = nullptr;
-        //VERIFICATION METHODS
-        verifySecondWordTable();
-        verifyTableName();
+        //VERIFICATION METHODS  
+        verificaTABLE();
+        verificaNume();
     }
 
     ~CREATE() {
         // Free each string in the vector
         for (int i = 0; i < nrCuv; i++) {
             delete[] vector[i];
-            vector[i] = nullptr;  // Optional: Set each element to nullptr
         }
-
-        // Free the array of pointers itself
         delete[] vector;
-        vector = nullptr;  // Optional: Set vector to nullptr after deletion
+
+        if (columns) {
+            delete[] columns;
+        }
     }
 
-
-    // Method to verify if the second word is "TABLE"
-    void verifySecondWordTable() {
+    void verificaTABLE() {
         if (this->vector[1] != nullptr && strcmp(this->vector[1], "TABLE") == 0) {
-            cout << "TABLE este al doilea cuvant..." << endl;
+            cout << "Valid command: TABLE" << endl;
         }
         else {
-            cout << "Eroare. TABLE nu este al doilea cuvant..." << endl;
+            cout << "Command typing error" << endl;
         }
     }
 
-    // Method to verify if the name exists and is valid
-    /*
-    * The table name cannot start with a digit but can have one if it is not the first character
-    * 1table -> invalid
-    * table1 -> valid
-    */
-    void verifyTableName() {
+    void verificaNume() {
         if (this->vector[2] != nullptr) {
             char* tableName = this->vector[2];
-
             if (tableName[0] >= '0' && tableName[0] <= '9') {
                 cout << "Table name cannot start with digits." << endl;
                 return;
             }
-            else
+            else {
                 cout << "Valid table name." << endl;
+            }
         }
-        else
+        else {
             cout << "Name does not exist." << endl;
+        }
     }
 
+    void parseColumn() {
+        cout << "Entering parseColumn()" << endl;
+        int startIndex = 3; // Starting index of column definitions
+        columnCount = 0;
 
-    // Getter for vector
+        // Count the number of columns based on '(' in the input
+        for (int i = startIndex; i < nrCuv; i++) {
+            if (vector[i][0] == '(') {
+                columnCount++;
+            }
+        }
+
+        // Allocate memory for columns
+        this->columns = new Column[columnCount];
+        int columnIndex = 0;
+
+        // Parse each column definition
+        for (int i = startIndex; i < nrCuv; i++) {
+            if (vector[i][0] == '(') {
+                char* columnString = new char[strlen(vector[i]) + 1];
+                strcpy(columnString, vector[i]);
+
+                // Remove outer parentheses
+                char* start = columnString + 1;
+                columnString[strlen(columnString) - 1] = '\0';
+
+                // Tokenize the column definition
+                char* attributes[4] = { nullptr };
+                int attrIndex = 0;
+                char* tok = strtok(start, ",");
+                while (tok != nullptr && attrIndex < 4) {
+                    while (*tok == ' ') tok++; // Trim leading spaces
+                    char* end = tok + strlen(tok) - 1;
+                    while (end > tok && *end == ' ') *end-- = '\0'; // Trim trailing spaces
+
+                    attributes[attrIndex] = tok;
+                    attrIndex++;
+                    tok = strtok(nullptr, ",");
+                }
+
+                // Verify and assign attributes
+                if (attrIndex == 4) {
+                    this->columns[columnIndex++] = Column(attributes[0], attributes[1], attributes[2], attributes[3]);
+                }
+                else {
+                    cout << "Invalid column definition: " << vector[i] << endl;
+                }
+
+                delete[] columnString;
+            }
+        }
+    }
+
+    void displayColumns() {
+        for (int i = 0; i < this->columnCount; i++) {
+            this->columns[i].printInfo();
+        }
+    }
+
     char** getVector() {
         return this->vector;
     }
+    // Getter for the number of columns
+    int getColumnCount() const {
+        return columnCount;
+    }
 
+    // Getter for the columns array
+    Column* getColumns() const {
+        return columns;
+    }
 };
