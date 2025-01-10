@@ -30,6 +30,14 @@ public:
         setVector(input);  // Initialize vector by splitting the input string
     }
 
+    ~CREATE() {
+        for (int i = 0; i < 20; i++) {
+            if (this->vector[i] != nullptr) {
+                delete[] this->vector[i];
+            }
+        }
+    }
+
     // Tokenizes the input string and stores words in vector
     void setVector(const char* input) {
         char* tempInput = new char[strlen(input) + 1];
@@ -63,12 +71,4 @@ public:
         return this->vector;
     }
 
-    // Destructor to clean up allocated memory
-    ~CREATE() {
-        for (int i = 0; i < 20; i++) {
-            if (this->vector[i] != nullptr) {
-                delete[] this->vector[i];
-            }
-        }
-    }
 };
