@@ -16,27 +16,43 @@ CREATE TABLE students IF NOT EXISTS ((id, integer, 1000, 0), (nume, text, 128, '
 class CREATE {
 private:
     Command_parser p;
-	char* tableName = nullptr;
-	int columnCount = 0;
-	char** vector;
+    char* tableName = nullptr;
+    int columnCount = 0;
+    char** vector;
     int nrCuv = 0;
 
 public:
     //constructor
-	CREATE(Command_parser f) {
-      //setVectorFromCommandParser(p);
-        this->vector = f.getVector();
+    CREATE(Command_parser& f) {
+        //setVectorFromCommandParser(p);
         this->nrCuv = f.getNrvector();
-        
-	}
-    ~CREATE() { 
-        for (int i = 0; i < nrCuv; i++)
-        { delete[] vector[i]; }
+        //this->vector = f.getVector();
+        char** sourceVector = f.getVector();
+
+        this->vector = new char* [nrCuv];
+        for (int i = 0; i < nrCuv; i++) {
+            this->vector[i] = new char[strlen(sourceVector[i]) + 1];
+            strcpy(this->vector[i], sourceVector[i]);
+        }
+    }
+
+    ~CREATE() {
+        for (int i = 0; i < nrCuv; i++) {
+            delete[] vector[i];
+        }
         delete[] vector;
     }
 
-    // Tokenizes the input string and stores words in vector
-    void setVector(const char* input) {
+        //methods
+        void verifica() const {
+        for (int i = 0; i < this->nrCuv; i++)
+            cout << this->vector[i] << " " << "asta e din create" << " ";
+        if (strcmp(vector[1], "TABLE") == 0)
+            cout << "evrica";
+    }
+
+        // Tokenizes the input string and stores words in vector
+        void setVector(const char* input) {
         char* tempInput = new char[strlen(input) + 1];
         strcpy(tempInput, input);
 
@@ -56,7 +72,7 @@ public:
     // Method to verify if the second word is "TABLE"
     void verifica() {
         if (this->vector[1] != nullptr && strcmp(this->vector[1], "TABLE") == 0) {
-            cout << "DA COAIEEEEEEEEEE" << endl;
+            cout << "merge" << endl;
         }
         else {
             cout << ":(" << endl;
@@ -67,13 +83,5 @@ public:
     char** getVector() {
         return this->vector;
     }
-
-    // Destructor to clean up allocated memory
-    ~CREATE() {
-        for (int i = 0; i < 20; i++) {
-            if (this->vector[i] != nullptr) {
-                delete[] this->vector[i];
-            }
-        }
-    }
+    
 };

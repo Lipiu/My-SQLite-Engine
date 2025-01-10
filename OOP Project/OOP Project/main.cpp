@@ -13,7 +13,7 @@ int main() {
     cout << "introduceti o comanda: ";
     cin.get(comandala, 256);
     cin.get(); // Solves the exit code issue when cin.get() is used after getline()
-    
+
 
     Command_parser p(comandala); // Create the initial object
     int a = p.getComVal();
@@ -49,6 +49,6 @@ int main() {
     }
     char** vector = p.getVector();
     cout << endl;
-     //-> TESTING
+    //-> TESTING
     return 0;
 }
