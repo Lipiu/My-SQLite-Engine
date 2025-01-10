@@ -42,7 +42,8 @@ public:
         //vector deletion
 
         this->nrvector = 0;
-
+        //VERIFICATIONS
+        
     }
 
     void modifyCommand(const char* input) {

@@ -43,11 +43,12 @@ int main() {
     case 3:
         //cout << "create command" << endl;
         CREATE c(p);
-        c.verifica();
+        
         // Call the executeCreateCommand method to handle CREATE command
         break;
     }
     char** vector = p.getVector();
+    p.coutVector();
     cout << endl;
     //-> TESTING
     return 0;

@@ -22,7 +22,7 @@ public:
 	Column() {}
 
 	//constructor with all parameters
-	Column(const string& name, const string& type, int size, const string& defaultValue) {
+	Column(const string& name, const string& type, const string& size, const string& defaultValue) {
 		this->setName(name);
 		this->setType(type);
 		this->setSize(size);
@@ -66,15 +66,16 @@ public:
 	}
 
 	void setType(string newType) {
-		if (newType != "integer" && newType != "text")
+		if (newType != "integer" && newType != "text" && newType!="float")
 			throw "Invalid type. Please enter integer or text!";
 		this->type = newType;
 	}
 
-	void setSize(int newSize){
-		if (newSize <= MIN_SIZE)
+	void setSize(string newSize){
+		int newIntSize = stoi(newSize);
+		if (newIntSize <= MIN_SIZE)
 			throw "Column size must be bigger than 0!";
-		this->size = newSize;
+		this->size = newIntSize;
 	}
 
 	void setDefaultValue(string newDefaultValue) {
