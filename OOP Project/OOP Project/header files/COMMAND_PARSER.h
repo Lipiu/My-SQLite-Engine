@@ -81,6 +81,7 @@ public:
 
     //SETTER
     void setVector(const char* input) {
+
         char* tempV[20]; // temporary vector
         if (input == nullptr)
             throw "Introduceti o comanda";
@@ -116,8 +117,11 @@ public:
                 break;
             }
         }
-        if (!isValidCommand/* && strcmp(this->vector[0], "0") != 0*/) {
-            cout << "Introduceti o comanda valida!" << endl;
+        if (strcmp(tempV[0], "0") != 0) {
+
+            if (isValidCommand == false) {
+                cout << "Enter a valid command" << endl << "Enter a command(0 to stop): ";
+            }
         }
         for (int i = 0; i < nr; i++)
             if (tempV[i] != nullptr)
@@ -156,7 +160,20 @@ public:
 
 
     }
+    void distrugere() {
+        //cout << "DISTRUGERE";
+        for (int i = 0; i < this->nrvector; i++) {
+            if (this->vector[i] != nullptr)
+                delete[] this->vector[i];
+            this->vector[i] = nullptr;
+        }
 
+        //vector deletion
+
+        this->nrvector = 0;
+        //VERIFICATIONS
+
+    }
 };
 
 //initialized static int with 4 (number of total commands)

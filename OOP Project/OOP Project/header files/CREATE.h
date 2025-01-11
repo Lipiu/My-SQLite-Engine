@@ -40,7 +40,7 @@ public:
         this->vector[nrCuv] = nullptr;
         //VERIFICATION METHODS  
         verificaTABLE();
-        verificaNume();
+        
     }
 
     ~CREATE() {
@@ -58,10 +58,12 @@ public:
     void verificaTABLE() {
         if (this->vector[1] != nullptr && strcmp(this->vector[1], "TABLE") == 0) {
             cout << "Valid command: TABLE" << endl;
+            verificaNume();
         }
         else {
             cout << "Command typing error" << endl;
         }
+        
     }
 
     void verificaNume() {

@@ -10,7 +10,7 @@ int main() {
     char comandala[256];
     while (strcmp(comandala,"0")!=0) {
         
-        cout << "Enter a command: ";
+        cout << "Enter a command(0 to stop): ";
         cin.getline(comandala, 256); // Use getline to handle input better
 
         Command_parser p(comandala); // Create the initial object
@@ -37,7 +37,7 @@ int main() {
         case 3:
             if (strcmp(p.getVector()[0], "CREATE") == 0) {
                 CREATE c(p);
-                cout << "CREATE command executed." << endl;
+                p.distrugere();
                 break;
             }
         case 4:
@@ -45,7 +45,7 @@ int main() {
                 DISPLAY d(p);
                 d.verifyDisplayCommand(); // Verify and process the DISPLAY command
             }
-            break;
+        default: break;
         }
         cout << endl; // Add spacing between iterations
         p.coutVector();
