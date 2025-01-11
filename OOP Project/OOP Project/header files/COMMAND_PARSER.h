@@ -50,7 +50,6 @@ public:
     void modifyCommand(const char* input) {
         char* copy = new char[strlen(input) + 1];
         int pozitie = -1;
-
         // Find the first '('
         for (int i = 0; i < strlen(input); i++) {
             if (input[i] == '(') {
@@ -58,27 +57,22 @@ public:
                 break;
             }
         }
-
         // If '(' is not found, consider the entire input
         if (pozitie == -1) {
             pozitie = strlen(input);
         }
-
         // Copy characters up to '(', preserving spaces
         int j = 0;
         for (int i = 0; i < pozitie; i++) {
             copy[j++] = input[i];
         }
-
         // Copy characters from '(' onward, skipping spaces
         for (int i = pozitie; i < strlen(input); i++) {
             if (input[i] != ' ') {
                 copy[j++] = input[i];
             }
         }
-
         copy[j] = '\0';
-
         // Free dynamically allocated memory
         this->setVector(copy);
         delete[] copy;
@@ -103,7 +97,6 @@ public:
         }
         //tempV[i] = NULL;
         int nr = i; //FINISHED SETTING UP THE TEMPORARY VECTOR
-
         delete[] tempCom; //DELETED THE TEMPORARY COMMAND
 
         //COMMAND VALIDATION:
@@ -123,7 +116,7 @@ public:
                 break;
             }
         }
-        if (!isValidCommand) {
+        if (!isValidCommand/* && strcmp(this->vector[0], "0") != 0*/) {
             cout << "Introduceti o comanda valida!" << endl;
         }
         for (int i = 0; i < nr; i++)

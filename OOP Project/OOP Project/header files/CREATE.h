@@ -3,7 +3,7 @@
 #include <string>
 #include <string.h>
 using namespace std;
-#include "Command_parser.h"
+#include "Command_parser.h" 
 #include "Column.h"
 
 /*
@@ -66,8 +66,7 @@ public:
 
     void verificaNume() {
         if (this->vector[2] != nullptr) {
-            char* tableName = this->vector[2];
-            if (tableName[0] >= '0' && tableName[0] <= '9') {
+            if (this->vector[2][0] >= '0' && this->vector[2][0] <= '9') {
                 cout << "Table name cannot start with digits." << endl;
                 return;
             }
