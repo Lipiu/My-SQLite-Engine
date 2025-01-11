@@ -61,20 +61,20 @@ public:
 	//setters
 	void setName(string newName){
 		if (newName.empty() || newName.length() < NAME_MIN_SIZE)
-			throw "Invalid name!";
+			cout << "Invalid name!";
 		this->name = newName;
 	}
 
 	void setType(string newType) {
 		if (newType != "integer" && newType != "text" && newType!="float")
-			throw "Invalid type. Please enter integer or text!";
+			cout << "Invalid type. Please enter integer or text!";
 		this->type = newType;
 	}
 
 	void setSize(string newSize){
 		int newIntSize = stoi(newSize);
 		if (newIntSize <= MIN_SIZE)
-			throw "Column size must be bigger than 0!";
+			cout << "Column size must be bigger than 0!";
 		this->size = newIntSize;
 	}
 
@@ -83,20 +83,20 @@ public:
 
 		if (this->type == "integer") {
 			if (newDefaultValue.empty()) {
-				throw "Default value for integer type cannot be empty!";
+				cout << "Default value for integer type cannot be empty!";
 			}
 
 			// Ensure all characters in newDefaultValue are numeric
 			for (size_t i = 0; i < newDefaultValue.length(); i++) {
 				char c = newDefaultValue[i];
 				if (c < '0' || c > '9') { // Compare to ASCII values
-					throw "Invalid default value for integer type!";
+					cout<< "Invalid default value for integer type!";
 				}
 			}
 		}
 		else if (this->type == "text") {
 			if (newDefaultValue.length() > MAX_DIMENSION) {
-				throw "Default value exceeds the allowed dimension for text!";
+				cout << "Default value exceeds the allowed dimension for text!";
 			}
 		}
 		this->defaultValue = newDefaultValue;

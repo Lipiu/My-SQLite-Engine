@@ -110,7 +110,7 @@ public:
                 // Tokenize the column definition
                 char* attributes[4] = { nullptr };
                 int attrIndex = 0;
-                char* tok = strtok(start, ",");
+                char* tok = strtok(start, ",)");
                 while (tok != nullptr && attrIndex < 4) {
                     while (*tok == ' ') tok++; // Trim leading spaces
                     char* end = tok + strlen(tok) - 1;
@@ -118,19 +118,22 @@ public:
 
                     attributes[attrIndex] = tok;
                     attrIndex++;
-                    tok = strtok(nullptr, ",");
+                    tok = strtok(nullptr, ",)");
                 }
-
+                for (int j = 0; j < 4; j++)
+                    //cout << attributes[j]<<"**"<<endl;
                 // Verify and assign attributes
                 if (attrIndex == 4) {
-                    this->columns[columnIndex++] = Column(attributes[0], attributes[1], attributes[2], attributes[3]);
+                    this->columns[columnIndex++] = Column(string(attributes[0]), string(attributes[1]), string(attributes[2]), string(attributes[3]));
+
                 }
+                
                 else {
                     cout << "Invalid column definition: " << vector[i] << endl;
                 }
-
+                columns->printInfo();
                 delete[] columnString;
-            }
+               }
         }
     }
 
