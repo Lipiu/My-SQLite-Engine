@@ -12,11 +12,9 @@ int main() {
     while (strcmp(comandala,"0")!=0) {
         
         cout << "Enter a command(0 to stop): ";
-        cin.getline(comandala, 256); // Use getline to handle input better
-
+        cin.getline(comandala, 256);
         Command_parser p(comandala); // Create the initial object
         int commandType = p.getComVal();
-
         // Handle invalid command
         while (commandType < 0&& strcmp(comandala, "0") != 0) {
             
@@ -38,9 +36,6 @@ int main() {
         case 3:
             if (strcmp(p.getVector()[0], "CREATE") == 0) {
                 CREATE c(p);
-           
-                p.distrugere();
-              
                 break;
             }
         case 4:
@@ -48,11 +43,12 @@ int main() {
                 DISPLAY d(p);
                 d.verifyDisplayCommand(); // Verify and process the DISPLAY command
             }
+        case 5:
+            if (strcmp(p.getVector()[0], "DROP") == 0)
+                cout << "merge"<<endl;
         default: break;
         }
-        cout << endl; // Add spacing between iterations
-        p.coutVector();
+
     }
-   //CREATE TABLE students ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
     return 0;
 }

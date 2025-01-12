@@ -36,9 +36,6 @@ public:
 		this->size = column.size;
 		this->defaultValue = column.defaultValue;
 	}
-
-
-	//destructor (not needed bc we use string not char*)
 	
 
 	//getters
@@ -91,7 +88,7 @@ public:
 			// Ensure all characters in newDefaultValue are numeric
 			for (size_t i = 0; i < newDefaultValue.length(); i++) {
 				char c = newDefaultValue[i];
-				if (c < '0' || c > '9') { // Compare to ASCII values
+				if (c < '0' || c > '9') { 
 					cout<< "Invalid default value for integer type!";
 				}
 			}
@@ -116,18 +113,5 @@ public:
 		cout << "Default value: " << this->defaultValue << endl;
 		cout << endl;
 	}
-	//operators
-	/*Column operator=(const Column& other) {
 
-		if (this == &other)
-			return *this;
-
-
-			name = other.name;
-			type = other.type;
-			size = other.size;
-			defaultValue = other.defaultValue;
-
-			return*this;
-	}*/
 };
