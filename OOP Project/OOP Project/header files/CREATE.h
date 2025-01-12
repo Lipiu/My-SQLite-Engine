@@ -74,6 +74,7 @@ public:
             }
             else {
                 cout << "Valid table name." << endl;
+                parseColumn();
             }
         }
         else {

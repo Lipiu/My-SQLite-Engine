@@ -37,8 +37,6 @@ int main() {
         case 3:
             if (strcmp(p.getVector()[0], "CREATE") == 0) {
                 CREATE c(p);
-                c.parseColumn();
-
                 p.distrugere();
                 break;
             }
