@@ -21,7 +21,7 @@ private:
     int columnCount = 0;
     char** vectorComanda = nullptr;
     int nrCuv = 0;
-    Column* columns = nullptr;
+    Column* columns;
 
 
     //constructor
@@ -133,8 +133,22 @@ public:
         for (int i = 0; i < index; i++) {
             cout << vector[i] << endl;
         }
-        Column l((vector[0]), (vector[1]), (vector[2]), (vector[3]));
-        l.printInfo();
+        columns = new Column[1000];
+        int colindex = 0;
+        int a = 0;
+        
+        
+        if ((index - 1) % 4 != 0)
+            cout << "Not enough atributes in the columns";
+        else {
+            for (int k = 0; k< (index-1) / 4; k++) {
+                this->columns[colindex] = Column((vector[a]), (vector[a+1]),(vector[a+2]), (vector[a+3]));
+                this->columns[colindex].printInfo();
+                colindex++;
+                a=a+4;
+            }
+        }
+        
         // Free allocated memory
         for (int j = 0; j < MAX_ELEMENTS; j++) {
             delete[] vector[j];

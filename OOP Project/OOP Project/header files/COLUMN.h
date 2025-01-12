@@ -22,13 +22,13 @@ public:
 	Column() {}
 
 	//constructor with all parameters
-	Column(const string& name, const string& type, const string& size, const string& defaultValue) {
-		this->setName(name);
-		this->setType(type);
-		this->setSize(size);
-		this->setDefaultValue(defaultValue);
+	Column const( char* name, const char* type, const char* size, const char* defaultValue){
+		this->setName(string(name));
+		this->setType(string(type));
+		this->setSize(string(size));
+		this->setDefaultValue(string(defaultValue));
 	}
-
+	
 	//copy constructor
 	Column(const Column& column) {
 		this->name = column.name;
@@ -116,4 +116,18 @@ public:
 		cout << "Default value: " << this->defaultValue << endl;
 		cout << endl;
 	}
+	//operators
+	/*Column operator=(const Column& other) {
+
+		if (this == &other)
+			return *this;
+
+
+			name = other.name;
+			type = other.type;
+			size = other.size;
+			defaultValue = other.defaultValue;
+
+			return*this;
+	}*/
 };
