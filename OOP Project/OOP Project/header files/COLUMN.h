@@ -22,7 +22,7 @@ public:
 	Column() {}
 
 	//constructor with all parameters
-	Column const( char* name, const char* type, const char* size, const char* defaultValue){
+	Column (char* name, const char* type, const char* size, const char* defaultValue){
 		this->setName(string(name));
 		this->setType(string(type));
 		this->setSize(string(size));

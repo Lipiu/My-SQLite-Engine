@@ -153,11 +153,6 @@ public:
         for (int j = 0; j < MAX_ELEMENTS; j++) {
             delete[] vector[j];
         }
-        
-        
     }
 
- 
- 
-    
 };
