@@ -27,11 +27,9 @@ private:
     //constructor
 public:
     CREATE(Command_parser& f) {
-        //setVectorFromCommandParser(p);
+        
         this->nrCuv = f.getNrvector();
-        //this->vector = f.getVector();
         char** sourceVector = f.getVector();
-
         this->vectorComanda = new char* [nrCuv + 1];
         for (int i = 0; i < nrCuv; i++) {
             this->vectorComanda[i] = new char[strlen(sourceVector[i]) + 1];
@@ -44,7 +42,6 @@ public:
     }
 
     ~CREATE() {
-        // Free each string in the vector
         for (int i = 0; i < nrCuv; i++) {
             delete[] vectorComanda[i];
         }
@@ -85,17 +82,16 @@ public:
     
     void parseColumnB() {
        
-        const int MAX_SIZE = 200;  // Maximum size for input string
         const int MAX_ELEMENTS = 20; // Maximum number of components to extract
         const int MAX_COMPONENT_SIZE = 50; // Maximum size of each component
 
 
         char* vector[MAX_ELEMENTS];
 
-        // Allocate memory for each substring and initialize
+       
         for (int j = 0; j < MAX_ELEMENTS; j++) {
             vector[j] = new char[MAX_COMPONENT_SIZE];
-            vector[j][0] = '\0'; // Null-terminate initially
+            vector[j][0] = '\0'; 
         }
 
         int index = 0; // Tracks components in `vector`
@@ -105,30 +101,30 @@ public:
         for (int i = 0; i < strlen(this->vectorComanda[3]); i++) {
             if (this->vectorComanda[3][i] == '(') {
                 insideParentheses = true;
-                pos = 0; // Reset position for a new component
+                pos = 0; 
             }
             else if (this->vectorComanda[3][i] == ')') {
                 insideParentheses = false;
                 if (pos > 0 && index < MAX_ELEMENTS) {
-                    vector[index][pos] = '\0'; // Null-terminate the string
+                    vector[index][pos] = '\0'; 
                     index++;
                 }
             }
             else if (insideParentheses && this->vectorComanda[3][i] != ',' && this->vectorComanda[3][i] != ' ') {
-                if (index < MAX_ELEMENTS && pos < MAX_COMPONENT_SIZE - 1) { // Ensure bounds
+                if (index < MAX_ELEMENTS && pos < MAX_COMPONENT_SIZE - 1) { 
                     vector[index][pos++] = this->vectorComanda[3][i];
                 }
             }
             else if (this->vectorComanda[3][i] == ',' && insideParentheses) {
                 if (pos > 0 && index < MAX_ELEMENTS) {
-                    vector[index][pos] = '\0'; // Null-terminate
+                    vector[index][pos] = '\0'; 
                     index++;
-                    pos = 0; // Reset position for next substring
+                    pos = 0;
                 }
             }
         }
 
-        // Print extracted components
+        
         cout << "Extracted components:" << endl;
         for (int i = 0; i < index; i++) {
             cout << vector[i] << endl;
@@ -138,7 +134,7 @@ public:
         int a = 0;
         
         
-        if ((index - 1) % 4 != 0)
+        if ((index - 1) % 4 != 0) 
             cout << "Not enough atributes in the columns";
         else {
             for (int k = 0; k< (index-1) / 4; k++) {
@@ -155,4 +151,7 @@ public:
         }
     }
 
+ 
+ 
+    //de facut variabila statica in loc de 4 LINIA 137
 };
