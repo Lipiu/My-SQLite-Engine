@@ -8,6 +8,7 @@ using namespace std;
 
 int main() {
     char comandala[256];
+    
     while (strcmp(comandala,"0")!=0) {
         
         cout << "Enter a command(0 to stop): ";
@@ -37,7 +38,9 @@ int main() {
         case 3:
             if (strcmp(p.getVector()[0], "CREATE") == 0) {
                 CREATE c(p);
+                
                 p.distrugere();
+              
                 break;
             }
         case 4:
@@ -50,6 +53,6 @@ int main() {
         cout << endl; // Add spacing between iterations
         p.coutVector();
     }
-   
+   //CREATE TABLE students ((id, integer, 1000, 0), (nume, text, 128, ''), (grupa, text,50,'1000'))
     return 0;
 }

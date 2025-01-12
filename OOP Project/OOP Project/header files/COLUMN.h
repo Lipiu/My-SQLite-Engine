@@ -63,11 +63,12 @@ public:
 		if (newName.empty() || newName.length() < NAME_MIN_SIZE)
 			cout << "Invalid name!";
 		this->name = newName;
+		
 	}
 
 	void setType(string newType) {
 		if (newType != "integer" && newType != "text" && newType!="float")
-			cout << "Invalid type. Please enter integer or text!";
+			cout << "Invalid type. Please enter integer,float or text!";
 		this->type = newType;
 	}
 
@@ -76,6 +77,7 @@ public:
 		if (newIntSize <= MIN_SIZE)
 			cout << "Column size must be bigger than 0!";
 		this->size = newIntSize;
+		
 	}
 
 	void setDefaultValue(string newDefaultValue) {
@@ -100,6 +102,7 @@ public:
 			}
 		}
 		this->defaultValue = newDefaultValue;
+		
 	}
 
 

@@ -19,7 +19,7 @@ private:
     Command_parser p;
     char* tableName = nullptr;
     int columnCount = 0;
-    char** vector = nullptr;
+    char** vectorComanda = nullptr;
     int nrCuv = 0;
     Column* columns = nullptr;
 
@@ -32,12 +32,12 @@ public:
         //this->vector = f.getVector();
         char** sourceVector = f.getVector();
 
-        this->vector = new char* [nrCuv + 1];
+        this->vectorComanda = new char* [nrCuv + 1];
         for (int i = 0; i < nrCuv; i++) {
-            this->vector[i] = new char[strlen(sourceVector[i]) + 1];
-            strcpy(this->vector[i], sourceVector[i]);
+            this->vectorComanda[i] = new char[strlen(sourceVector[i]) + 1];
+            strcpy(this->vectorComanda[i], sourceVector[i]);
         }
-        this->vector[nrCuv] = nullptr;
+        this->vectorComanda[nrCuv] = nullptr;
         //VERIFICATION METHODS  
         verificaTABLE();
         
@@ -46,9 +46,9 @@ public:
     ~CREATE() {
         // Free each string in the vector
         for (int i = 0; i < nrCuv; i++) {
-            delete[] vector[i];
+            delete[] vectorComanda[i];
         }
-        delete[] vector;
+        delete[] vectorComanda;
 
         if (columns) {
             delete[] columns;
@@ -56,7 +56,7 @@ public:
     }
 
     void verificaTABLE() {
-        if (this->vector[1] != nullptr && strcmp(this->vector[1], "TABLE") == 0) {
+        if (this->vectorComanda[1] != nullptr && strcmp(this->vectorComanda[1], "TABLE") == 0) {
             cout << "Valid command: TABLE" << endl;
             verificaNume();
         }
@@ -67,14 +67,14 @@ public:
     }
 
     void verificaNume() {
-        if (this->vector[2] != nullptr) {
-            if (this->vector[2][0] >= '0' && this->vector[2][0] <= '9') {
+        if (this->vectorComanda[2] != nullptr) {
+            if (this->vectorComanda[2][0] >= '0' && this->vectorComanda[2][0] <= '9') {
                 cout << "Table name cannot start with digits." << endl;
                 return;
             }
             else {
                 cout << "Valid table name." << endl;
-                parseColumn();
+                parseColumnB();
             }
         }
         else {
@@ -82,78 +82,68 @@ public:
         }
     }
 
-    void parseColumn() {
-        cout << "Entering parseColumn()" << endl;
-        int startIndex = 3; // Starting index of column definitions
-        columnCount = 0;
+    
+    void parseColumnB() {
+       
+        const int MAX_SIZE = 200;  // Maximum size for input string
+        const int MAX_ELEMENTS = 20; // Maximum number of components to extract
+        const int MAX_COMPONENT_SIZE = 50; // Maximum size of each component
 
-        // Count the number of columns based on '(' in the input
-        for (int i = startIndex; i < nrCuv; i++) {
-            if (vector[i][0] == '(') {
-                columnCount++;
+
+        char* vector[MAX_ELEMENTS];
+
+        // Allocate memory for each substring and initialize
+        for (int j = 0; j < MAX_ELEMENTS; j++) {
+            vector[j] = new char[MAX_COMPONENT_SIZE];
+            vector[j][0] = '\0'; // Null-terminate initially
+        }
+
+        int index = 0; // Tracks components in `vector`
+        int pos = 0;   // Tracks position within the current substring
+        bool insideParentheses = false;
+
+        for (int i = 0; i < strlen(this->vectorComanda[3]); i++) {
+            if (this->vectorComanda[3][i] == '(') {
+                insideParentheses = true;
+                pos = 0; // Reset position for a new component
+            }
+            else if (this->vectorComanda[3][i] == ')') {
+                insideParentheses = false;
+                if (pos > 0 && index < MAX_ELEMENTS) {
+                    vector[index][pos] = '\0'; // Null-terminate the string
+                    index++;
+                }
+            }
+            else if (insideParentheses && this->vectorComanda[3][i] != ',' && this->vectorComanda[3][i] != ' ') {
+                if (index < MAX_ELEMENTS && pos < MAX_COMPONENT_SIZE - 1) { // Ensure bounds
+                    vector[index][pos++] = this->vectorComanda[3][i];
+                }
+            }
+            else if (this->vectorComanda[3][i] == ',' && insideParentheses) {
+                if (pos > 0 && index < MAX_ELEMENTS) {
+                    vector[index][pos] = '\0'; // Null-terminate
+                    index++;
+                    pos = 0; // Reset position for next substring
+                }
             }
         }
 
-        // Allocate memory for columns
-        this->columns = new Column[columnCount];
-        int columnIndex = 0;
-
-        // Parse each column definition
-        for (int i = startIndex; i < nrCuv; i++) {
-            if (vector[i][0] == '(') {
-                char* columnString = new char[strlen(vector[i]) + 1];
-                strcpy(columnString, vector[i]);
-
-                // Remove outer parentheses
-                char* start = columnString + 1;
-                columnString[strlen(columnString) - 1] = '\0';
-
-                // Tokenize the column definition
-                char* attributes[4] = { nullptr };
-                int attrIndex = 0;
-                char* tok = strtok(start, ",)");
-                while (tok != nullptr && attrIndex < 4) {
-                    while (*tok == ' ') tok++; // Trim leading spaces
-                    char* end = tok + strlen(tok) - 1;
-                    while (end > tok && *end == ' ') *end-- = '\0'; // Trim trailing spaces
-
-                    attributes[attrIndex] = tok;
-                    attrIndex++;
-                    tok = strtok(nullptr, ",)");
-                }
-                for (int j = 0; j < 4; j++)
-                    //cout << attributes[j]<<"**"<<endl;
-                // Verify and assign attributes
-                if (attrIndex == 4) {
-                    this->columns[columnIndex++] = Column(string(attributes[0]), string(attributes[1]), string(attributes[2]), string(attributes[3]));
-
-                }
-                
-                else {
-                    cout << "Invalid column definition: " << vector[i] << endl;
-                }
-                columns->printInfo();
-                delete[] columnString;
-               }
+        // Print extracted components
+        cout << "Extracted components:" << endl;
+        for (int i = 0; i < index; i++) {
+            cout << vector[i] << endl;
         }
-    }
-
-    void displayColumns() {
-        for (int i = 0; i < this->columnCount; i++) {
-            this->columns[i].printInfo();
+        Column l((vector[0]), (vector[1]), (vector[2]), (vector[3]));
+        l.printInfo();
+        // Free allocated memory
+        for (int j = 0; j < MAX_ELEMENTS; j++) {
+            delete[] vector[j];
         }
+        
+        
     }
 
-    char** getVector() {
-        return this->vector;
-    }
-    // Getter for the number of columns
-    int getColumnCount() const {
-        return columnCount;
-    }
-
-    // Getter for the columns array
-    Column* getColumns() const {
-        return columns;
-    }
+ 
+ 
+    
 };
