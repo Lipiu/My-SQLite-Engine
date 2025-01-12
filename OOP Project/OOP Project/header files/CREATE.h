@@ -52,12 +52,14 @@ public:
 
     void verificaTABLE() {
         if (this->vectorComanda[1] != nullptr && strcmp(this->vectorComanda[1], "TABLE") == 0) {
-            cout << "Valid command: TABLE" << endl;
+           
             verificaNume();
         }
-        else {
+        else
+               if (this->vectorComanda[1] != nullptr) 
             cout << "Command typing error" << endl;
-        }
+        
+        
         
     }
 
@@ -68,7 +70,7 @@ public:
                 return;
             }
             else {
-                cout << "Valid table name." << endl;
+               
                 parseColumnB();
             }
         }
@@ -96,7 +98,7 @@ public:
         int pos = 0;   // Tracks position within the current substring
         bool insideParentheses = false;
         if (this->vectorComanda[3] == nullptr) {
-            cout << "no columns introduced";
+            cout << "no columns introduced"<<endl;
         }
         else {
             for (int i = 0; i < strlen(this->vectorComanda[3]); i++) {

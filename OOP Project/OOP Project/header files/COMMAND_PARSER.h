@@ -53,7 +53,7 @@ public:
     //setters
     void setVector(const char* input) {
 
-        char* tempV[20]; 
+        char* tempV[20] = { nullptr };
         if (input == nullptr)
             throw "Introduceti o comanda";
         //temporary vector
@@ -75,7 +75,8 @@ public:
         bool isValidCommand = false;
         for (int j = 0; j < NUMBER_OF_COMMANDS; j++) {
             if (strcmp(tempV[0], this->matrix[j][0]) == 0) {
-                cout << this->matrix[j][1] << endl;
+                if(tempV[1]==nullptr)
+                    cout << this->matrix[j][1] << endl;
                 for (int i = 0; i < nr; i++) {
                     this->vector[i] = new char[strlen(tempV[i]) + 1];
                     strcpy(this->vector[i], tempV[i]);
