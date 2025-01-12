@@ -153,13 +153,6 @@ public:
             cout << "COMANDA ESTE VALIDA" << endl;
     }
 
-    void validation() {
-
-
-
-
-
-    }
     void distrugere() {
         //cout << "DISTRUGERE";
         for (int i = 0; i < this->nrvector; i++) {
