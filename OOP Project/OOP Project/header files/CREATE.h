@@ -2,9 +2,10 @@
 #include <iostream>
 #include <string>
 #include <string.h>
-using namespace std;
 #include "Command_parser.h" 
 #include "Column.h"
+#include "TABLE.h"
+using namespace std;
 
 /*
 * VALID COMMANDS EXAMPLES:
@@ -14,8 +15,9 @@ CREATE TABLE students IF NOT EXISTS ((id, integer, 1000, 0), (nume, text, 128, '
 
 class CREATE {
 private:
+    static int commandNumber;
     Command_parser p;
-    char* tableName = nullptr;
+    char* tableName = nullptr; 
     int columnCount = 0;
     char** vectorComanda = nullptr;
     int nrCuv = 0;
@@ -34,9 +36,9 @@ public:
             strcpy(this->vectorComanda[i], sourceVector[i]);
         }
         this->vectorComanda[nrCuv] = nullptr;
-     //verification methods 
         verificaTABLE();
-        
+     //verification methods 
+       
     }
 
     ~CREATE() {
@@ -70,7 +72,7 @@ public:
                 return;
             }
             else {
-               
+                this->tableName = vectorComanda[2];
                 parseColumnB();
             }
         }
@@ -132,7 +134,7 @@ public:
             int colindex = 0;
             int a = 0;
 
-            if ((index - 1) % 4 != 0)
+            if ((index - 1) % commandNumber != 0)
                 cout << "Not enough atributes in the columns";
             else {
                 for (int k = 0; k < (index - 1) / 4; k++) {
@@ -141,14 +143,18 @@ public:
                     colindex++;
                     a = a + 4;
                 }
+                this->columnCount = colindex;
             }
             for (int j = 0; j < MAX_ELEMENTS; j++) {
                 delete[] vector[j];
             }
         }
-
-
+        if (this->columnCount) {
+            Table t(this->tableName, this->columns, this->columnCount);
+            t.printTableInfo();
+        }
     }
  
     //de facut variabila statica in loc de 4 LINIA 137
 };
+int CREATE::commandNumber = 4;

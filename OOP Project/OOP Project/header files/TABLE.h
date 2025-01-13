@@ -46,8 +46,10 @@ public:
 	}
 
 	Column& getColumns(int index) {
-		if (index < 0 || index >= columnCount)
-			throw "Index out of bounds!";
+		if (index < 0 || index >= columnCount) {
+			cout << "Index out of bounds!";
+			
+		}
 		return this->columns[index];
 	}
 
@@ -57,15 +59,19 @@ public:
 
 	//setters
 	void setTableName(const std::string& newTableName) {
-		if (newTableName.empty())
-			throw "Table name cannot be empty!";
+		if (newTableName.empty()) {
+			cout << "Table name cannot be empty!";
+			
+		}
+		else
 		this->tableName = newTableName;
 	}
 
 	void setColumns(Column* cols, int count) {
-		if (cols == nullptr || count <= 0)
-			throw "Invalid columns or count!";
-		
+		if (cols == nullptr || count <= 0) {
+			cout << "Invalid columns or count!";
+			
+		}
 		if (this->columns) {
 			delete[] this->columns;
 			this->columns = nullptr;
@@ -82,20 +88,21 @@ public:
 		if (this->columns == nullptr)
 			return;
 
-		cout << "\ntabela/table: " << endl;
-		cout << "coloane/columns: " << endl;
+		cout << "\ntable: " << endl;
+		cout << "columns: " << endl;
 	
 		for (int i = 0; i < columnCount; i++) {
-			cout << "coloana " << i + 1 << "/column " << i + 1 << ":" << endl;
-			cout << "denumire/name: " << this->columns[i].getName();
-			cout << "tip/type: ";
+			cout << "---------------------"<<endl;
+			cout << "column " << i + 1 << ":" << endl;
+			cout << "name: " << this->columns[i].getName()<<" ";
+			cout << "type: ";
 			if (this->columns[i].getType() == "integer")
 				cout << "numeric";
 			else
 				cout << this->columns[i].getType();
 			cout << "\n";
 
-			cout << "dimensiune/dimension: " << this->columns[i].getSize() << endl;
+			cout << "dimension: " << this->columns[i].getSize() << endl;
 			cout << "default: " << this->columns[i].getDefaultValue() << endl;
 		}
 	}
