@@ -59,7 +59,7 @@ public:
         }
         else
                if (this->vectorComanda[1] != nullptr) 
-            cout << "Command typing error" << endl;
+            cout << "wrong command name (missing keywords)" << endl;
         
         
         
@@ -67,20 +67,32 @@ public:
 
     void verificaNume() {
         if (this->vectorComanda[2] != nullptr) {
-            if (this->vectorComanda[2][0] >= '0' && this->vectorComanda[2][0] <= '9') {
+            if (this->vectorComanda[2][0] == '(')
+                cout << "wrong command (missing table name)"<<endl;
+            if (this->vectorComanda[2][0] >= '0' && this->vectorComanda[2][0] <= '9' ) {
                 cout << "Table name cannot start with digits." << endl;
                 return;
             }
             else {
                 this->tableName = vectorComanda[2];
-                parseColumnB();
+                verificaParanteze();
             }
         }
         else {
-            cout << "Name does not exist." << endl;
+            cout << "wrong command (missing table name)" << endl;
         }
     }
+    void verificaParanteze() {
+        if (this->vectorComanda[3] != nullptr) {
+            if ((this->vectorComanda[3][0] == '(' && this->vectorComanda[3][1] != '(') || (this->vectorComanda[3][strlen(vectorComanda[3]) - 2] != ')' && this->vectorComanda[3][strlen(vectorComanda[3]) - 1] == ')')) {
+                cout << "wrong command (missing ())"<<endl;
+                return;
+            }
+            else
+                parseColumnB();
+        }
 
+    }
    //column parser - the program dosent verify if the column syntax is fully proper yet. 
     void parseColumnB() {
 
@@ -135,13 +147,18 @@ public:
             int a = 0;
 
             if ((index - 1) % commandNumber != 0)
-                cout << "Not enough atributes in the columns";
+                cout << "wrong command (incomplete columns description)"<<endl;
             else {
                 for (int k = 0; k < (index - 1) / 4; k++) {
                     this->columns[colindex] = Column((vector[a]), (vector[a + 1]), (vector[a + 2]), (vector[a + 3]));
-                    this->columns[colindex].printInfo();
-                    colindex++;
-                    a = a + 4;
+                    
+                    if (columns[colindex].getValid() == 1) {
+                        colindex++;
+                        a = a + 4;
+
+                    }
+                    else
+                        return;
                 }
                 this->columnCount = colindex;
             }
@@ -149,12 +166,14 @@ public:
                 delete[] vector[j];
             }
         }
-        if (this->columnCount) {
+        int ok = 1;
+        
+        
+        if (this->columnCount != 0 && ok == 1) {
             Table t(this->tableName, this->columns, this->columnCount);
             t.printTableInfo();
         }
     }
  
-    //de facut variabila statica in loc de 4 LINIA 137
 };
 int CREATE::commandNumber = 4;

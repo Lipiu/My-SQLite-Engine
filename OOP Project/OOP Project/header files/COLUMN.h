@@ -16,6 +16,7 @@ private:
 	string type = "";
 	int size = 0;
 	string defaultValue = "";
+	int valid = 1;
 
 public:
 	//default constructor
@@ -24,9 +25,9 @@ public:
 	//constructor with all parameters
 	Column (char* name, const char* type, const char* size, const char* defaultValue){
 		this->setName(string(name));
-		this->setType(string(type));
-		this->setSize(string(size));
-		this->setDefaultValue(string(defaultValue));
+		this->setType(string(type),this->valid);
+		this->setSize(string(size),this->valid);
+		this->setDefaultValue(string(defaultValue),this->valid);
 	}
 	
 	//copy constructor
@@ -37,7 +38,9 @@ public:
 		this->defaultValue = column.defaultValue;
 	}
 	
-
+	int getValid() {
+		return this->valid;
+	}
 	//getters
 	string getName() const {
 		return this->name;
@@ -57,32 +60,52 @@ public:
 
 	//setters
 	void setName(string newName){
-		if (newName.empty() || newName.length() < NAME_MIN_SIZE)
+		if (newName.empty() || newName.length() < NAME_MIN_SIZE) {
 			cout << "Invalid name!";
+			return;
+			this->valid = 0;
+		}
 		this->name = newName;
 		
 	}
 
-	void setType(string newType) {
-		if (newType != "integer" && newType != "text" && newType!="float")
-			cout << "Invalid type. Please enter integer,float or text!";
+	void setType(string newType,int val) {
+		if (val == 0)
+			return;
+		if (newType != "integer" && newType != "text" && newType != "float") {
+			cout << "wrong command: wrong column type (accepted types are text, integer, float)"<<endl;
+			this->valid = 0;
+			return;
+			
+		}
 		this->type = newType;
 	}
 
-	void setSize(string newSize){
+	void setSize(string newSize,int val){
+		if (val == 0)
+			return;
 		int newIntSize = stoi(newSize);
-		if (newIntSize <= MIN_SIZE)
+		if (newIntSize <= MIN_SIZE) {
 			cout << "Column size must be bigger than 0!";
+			this->valid = 0;
+			return;
+			
+		}
 		this->size = newIntSize;
 		
 	}
 
-	void setDefaultValue(string newDefaultValue) {
+	void setDefaultValue(string newDefaultValue,int val)
+	{
+		if (val == 0)
+			return;
 		cout << "Setting default value: " << newDefaultValue << " for type: " << this->type << endl;
 
 		if (this->type == "integer") {
 			if (newDefaultValue.empty()) {
 				cout << "Default value for integer type cannot be empty!";
+				return;
+				this->valid = 0;
 			}
 
 			// Ensure all characters in newDefaultValue are numeric
@@ -90,12 +113,16 @@ public:
 				char c = newDefaultValue[i];
 				if (c < '0' || c > '9') { 
 					cout<< "Invalid default value for integer type!";
+					this->valid = 0;
+					return;
 				}
 			}
 		}
 		else if (this->type == "text") {
 			if (newDefaultValue.length() > MAX_DIMENSION) {
 				cout << "Default value exceeds the allowed dimension for text!";
+				this->valid = 0;
+				return;
 			}
 		}
 		this->defaultValue = newDefaultValue;
