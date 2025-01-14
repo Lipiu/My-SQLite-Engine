@@ -2,6 +2,7 @@
 #include "header files/CREATE.h"
 #include "header files/DISPLAY.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
@@ -9,6 +10,13 @@ using namespace std;
 int main() {
     char comandala[256] = "";
     
+    //opening the output.txt file
+    ofstream file("output.txt");
+    if (!file.is_open()) {
+        cerr << "Unable to open the file...";
+        exit(1);
+    }
+
     while (strcmp(comandala,"0")!=0) {
 
         cout << "Enter a command(0 to stop): ";
