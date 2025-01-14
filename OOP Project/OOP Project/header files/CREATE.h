@@ -17,7 +17,7 @@ class CREATE {
 private:
     static int commandNumber;
     Command_parser p;
-    char* tableName = nullptr; 
+    char* tableName = nullptr;
     int columnCount = 0;
     char** vectorComanda = nullptr;
     int nrCuv = 0;
@@ -27,7 +27,7 @@ private:
     //constructor
 public:
     CREATE(Command_parser& f) {
-        
+
         this->nrCuv = f.getNrvector();
         char** sourceVector = f.getVector();
         this->vectorComanda = new char* [nrCuv + 1];
@@ -37,9 +37,11 @@ public:
         }
         this->vectorComanda[nrCuv] = nullptr;
         verificaTABLE();
-     //verification methods 
-       
+        //verification methods 
+
     }
+public:
+
 
     ~CREATE() {
         for (int i = 0; i < nrCuv; i++) {
@@ -54,38 +56,59 @@ public:
 
     void verificaTABLE() {
         if (this->vectorComanda[1] != nullptr && strcmp(this->vectorComanda[1], "TABLE") == 0) {
-           
+
             verificaNume();
         }
         else
-               if (this->vectorComanda[1] != nullptr) 
-            cout << "wrong command name (missing keywords)" << endl;
-        
-        
-        
+            if (this->vectorComanda[1] != nullptr)
+                cout << "wrong command name (missing keywords)" << endl;
+
+
+
     }
 
     void verificaNume() {
         if (this->vectorComanda[2] != nullptr) {
-            if (this->vectorComanda[2][0] == '(')
-                cout << "wrong command (missing table name)"<<endl;
-            if (this->vectorComanda[2][0] >= '0' && this->vectorComanda[2][0] <= '9' ) {
+            if (this->vectorComanda[2][0] == '(') {
+                cout << "wrong command (missing table name)" << endl;
+                return;
+            }
+            if (this->vectorComanda[2][0] >= '0' && this->vectorComanda[2][0] <= '9') {
                 cout << "Table name cannot start with digits." << endl;
                 return;
             }
             else {
                 this->tableName = vectorComanda[2];
-                verificaParanteze();
+                if (nrCuv == 7)
+                    verificaIFNOT();
+                if (nrCuv == 7 || nrCuv == 4)
+                    verificaParanteze();
+                else
+                    cout << "wrong command: wrong table name (has space)" << endl;
             }
         }
         else {
             cout << "wrong command (missing table name)" << endl;
         }
     }
+
+    void verificaIFNOT() {
+        std::string verificare = this->vectorComanda[3] + std::string(this->vectorComanda[4]) + this->vectorComanda[5];
+
+        if (verificare == "IFNOTEXISTS") {
+            verificaParanteze();
+        }
+        else {
+            cout << this->vectorComanda[3] << this->vectorComanda[4] << this->vectorComanda[5]
+                << " WRONG SPELLING " << endl
+                << verificare;
+        }
+    }
+
     void verificaParanteze() {
-        if (this->vectorComanda[3] != nullptr) {
-            if ((this->vectorComanda[3][0] == '(' && this->vectorComanda[3][1] != '(') || (this->vectorComanda[3][strlen(vectorComanda[3]) - 2] != ')' && this->vectorComanda[3][strlen(vectorComanda[3]) - 1] == ')')) {
-                cout << "wrong command (missing ())"<<endl;
+        if (this->vectorComanda[this->nrCuv - 1] != nullptr) {
+            if ((this->vectorComanda[this->nrCuv - 1][0] == '(' && this->vectorComanda[this->nrCuv - 1][1] != '(') || (this->vectorComanda[this->nrCuv - 1][strlen(vectorComanda[this->nrCuv - 1]) - 2] != ')' && this->vectorComanda[this->nrCuv - 1][strlen(vectorComanda[this->nrCuv - 1]) - 1] == ')')) {
+                cout << "wrong command (missing ())" << endl;
                 return;
             }
             else
@@ -93,7 +116,7 @@ public:
         }
 
     }
-   //column parser - the program dosent verify if the column syntax is fully proper yet. 
+    //column parser - the program dosent verify if the column syntax is fully proper yet. 
     void parseColumnB() {
 
         const int MAX_ELEMENTS = 20; // Maximum number of components to extract
@@ -111,28 +134,28 @@ public:
         int index = 0; // Tracks components in `vector`
         int pos = 0;   // Tracks position within the current substring
         bool insideParentheses = false;
-        if (this->vectorComanda[3] == nullptr) {
-            cout << "no columns introduced"<<endl;
+        if (this->vectorComanda[this->nrCuv - 1] == nullptr) {
+            cout << "no columns introduced" << endl;
         }
         else {
-            for (int i = 0; i < strlen(this->vectorComanda[3]); i++) {
-                if (this->vectorComanda[3][i] == '(') {
+            for (int i = 0; i < strlen(this->vectorComanda[this->nrCuv - 1]); i++) {
+                if (this->vectorComanda[this->nrCuv - 1][i] == '(') {
                     insideParentheses = true;
                     pos = 0;
                 }
-                else if (this->vectorComanda[3][i] == ')') {
+                else if (this->vectorComanda[this->nrCuv - 1][i] == ')') {
                     insideParentheses = false;
                     if (pos > 0 && index < MAX_ELEMENTS) {
                         vector[index][pos] = '\0';
                         index++;
                     }
                 }
-                else if (insideParentheses && this->vectorComanda[3][i] != ',' && this->vectorComanda[3][i] != ' ') {
+                else if (insideParentheses && this->vectorComanda[this->nrCuv - 1][i] != ',' && this->vectorComanda[this->nrCuv - 1][i] != ' ') {
                     if (index < MAX_ELEMENTS && pos < MAX_COMPONENT_SIZE - 1) {
-                        vector[index][pos++] = this->vectorComanda[3][i];
+                        vector[index][pos++] = this->vectorComanda[this->nrCuv - 1][i];
                     }
                 }
-                else if (this->vectorComanda[3][i] == ',' && insideParentheses) {
+                else if (this->vectorComanda[this->nrCuv - 1][i] == ',' && insideParentheses) {
                     if (pos > 0 && index < MAX_ELEMENTS) {
                         vector[index][pos] = '\0';
                         index++;
@@ -141,17 +164,17 @@ public:
                 }
             }
 
-            
+
             this->columns = new Column[20];
             int colindex = 0;
             int a = 0;
 
             if ((index - 1) % commandNumber != 0)
-                cout << "wrong command (incomplete columns description)"<<endl;
+                cout << "wrong command (incomplete columns description)" << endl;
             else {
                 for (int k = 0; k < (index - 1) / 4; k++) {
                     this->columns[colindex] = Column((vector[a]), (vector[a + 1]), (vector[a + 2]), (vector[a + 3]));
-                    
+
                     if (columns[colindex].getValid() == 1) {
                         colindex++;
                         a = a + 4;
@@ -167,13 +190,13 @@ public:
             }
         }
         int ok = 1;
-        
-        
+
+
         if (this->columnCount != 0 && ok == 1) {
             Table t(this->tableName, this->columns, this->columnCount);
             t.printTableInfo();
         }
     }
- 
+
 };
 int CREATE::commandNumber = 4;
