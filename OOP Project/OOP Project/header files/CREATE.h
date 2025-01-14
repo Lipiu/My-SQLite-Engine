@@ -96,7 +96,7 @@ public:
         std::string verificare = this->vectorComanda[3] + std::string(this->vectorComanda[4]) + this->vectorComanda[5];
 
         if (verificare == "IFNOTEXISTS") {
-            verificaParanteze();
+            return;
         }
         else {
             cout << this->vectorComanda[3] << this->vectorComanda[4] << this->vectorComanda[5]

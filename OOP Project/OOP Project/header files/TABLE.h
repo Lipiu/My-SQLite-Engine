@@ -87,6 +87,7 @@ public:
 
 	//print info
 	void printTableInfo() const {
+		cout << "afisez tabel" << endl;
 		if (this->columns == nullptr)
 			return;
 
