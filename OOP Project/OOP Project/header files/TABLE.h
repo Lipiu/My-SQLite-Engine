@@ -10,6 +10,8 @@ private:
 	int columnCount = 0;
 
 public:
+	Table(){}
+
 	//constructor with parameters
 	Table(const std::string& name, Column* columns, int count) {
 		this->setTableName(name);

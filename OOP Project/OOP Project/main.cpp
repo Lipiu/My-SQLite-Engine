@@ -7,12 +7,13 @@
 using namespace std;
 
 int main() {
-    char comandala[256];
+    char comandala[256] = "";
     
     while (strcmp(comandala,"0")!=0) {
-        
+
         cout << "Enter a command(0 to stop): ";
         cin.getline(comandala, 256);
+
         Command_parser p(comandala); // Create the initial object
         int commandType = p.getComVal();
         // Handle invalid command
