@@ -91,7 +91,7 @@ public:
         if (strcmp(tempV[0], "0") != 0) {
 
             if (isValidCommand == false) {
-                cout << "Enter a valid command" << endl << "Enter a command(0 to stop): ";
+                cout << "wrong command name (missing keywords)" << endl << "Enter a command(0 to stop): ";
             }
         }
         for (int i = 0; i < nr; i++)
