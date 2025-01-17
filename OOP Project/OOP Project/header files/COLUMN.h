@@ -38,10 +38,11 @@ public:
 		this->defaultValue = column.defaultValue;
 	}
 	
+	//getters
 	int getValid() {
 		return this->valid;
 	}
-	//getters
+	
 	string getName() const {
 		return this->name;
 	}
@@ -109,7 +110,7 @@ public:
 			}
 
 			// Ensure all characters in newDefaultValue are numeric
-			for (size_t i = 0; i < newDefaultValue.length(); i++) {
+			for (int i = 0; i < newDefaultValue.length(); i++) {
 				char c = newDefaultValue[i];
 				if (c < '0' || c > '9') { 
 					cout<< "Invalid default value for integer type!";
@@ -126,7 +127,6 @@ public:
 			}
 		}
 		this->defaultValue = newDefaultValue;
-		
 	}
 
 

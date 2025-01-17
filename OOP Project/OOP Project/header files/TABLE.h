@@ -91,8 +91,8 @@ public:
 		if (this->columns == nullptr)
 			return;
 
-		cout << "\ntable: " << endl;
-		cout << "columns: " << endl;
+		cout << "\nTable name: "<< this->getTableName() << endl;
+		cout << "Number of columns: " << this->columnCount << endl;
 	
 		for (int i = 0; i < columnCount; i++) {
 			cout << "---------------------"<<endl;

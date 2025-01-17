@@ -9,8 +9,8 @@ using namespace std;
 
 class Command_parser {
 private:
-    static int NUMBER_OF_COMMANDS; 
     //static variables;
+    static int NUMBER_OF_COMMANDS;
     char* vector[20];
     int nrvector = 0;
     int comVal = -1;
@@ -22,8 +22,6 @@ private:
         {"DISPLAY", "DISPLAY TABLE table_name"},
         {"DROP", "DROP TABLE table_name"}
     };
-
-   
 
 public:
     //Default constructor
@@ -42,11 +40,7 @@ public:
             this->vector[i] = nullptr;
         }
 
-        
-
         this->nrvector = 0;
-        
-     
     }
 
     
@@ -159,10 +153,3 @@ public:
 
 //initialized static int with 6 (number of total commands)
 int Command_parser::NUMBER_OF_COMMANDS = 6;
-
-
-
-
-
-
-

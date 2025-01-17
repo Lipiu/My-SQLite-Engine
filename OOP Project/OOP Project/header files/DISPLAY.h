@@ -7,11 +7,6 @@
 #include "CREATE.h"
 using namespace std;
 
-//need to verify if the command is spelled right
-//need to check if the table name exists
-//check if there are too many names
-//if yes display table
-
 class DISPLAY {
 private:
     Command_parser p; //we need the verifySecondWordTable() from CREATE.h
@@ -85,7 +80,5 @@ public:
             cout << "Wrong command: unrecognized format" << endl;
         }
     }
-
-
 };
 

@@ -23,9 +23,8 @@ private:
     int nrCuv = 0;
     Column* columns;
 
-
-    //constructor
 public:
+    //constructor
     CREATE(Command_parser& f) {
 
         this->nrCuv = f.getNrvector();
@@ -36,13 +35,12 @@ public:
             strcpy(this->vectorComanda[i], sourceVector[i]);
         }
         this->vectorComanda[nrCuv] = nullptr;
-        verificaTABLE();
+        verifyTable();
         //verification methods 
 
     }
-public:
 
-
+    //destructor
     ~CREATE() {
         for (int i = 0; i < nrCuv; i++) {
             delete[] vectorComanda[i];
@@ -54,10 +52,11 @@ public:
         }
     }
 
-    void verificaTABLE() {
+    //method for verifying if 2nd word is "TABLE"
+    void verifyTable() {
         if (this->vectorComanda[1] != nullptr && strcmp(this->vectorComanda[1], "TABLE") == 0) {
 
-            verificaNume();
+            verifyName();
         }
         else
             if (this->vectorComanda[1] != nullptr)
@@ -67,7 +66,8 @@ public:
 
     }
 
-    void verificaNume() {
+    //method for verifying name
+    void verifyName() {
         if (this->vectorComanda[2] != nullptr) {
             if (this->vectorComanda[2][0] == '(') {
                 cout << "wrong command (missing table name)" << endl;
@@ -80,9 +80,9 @@ public:
             else {
                 this->tableName = vectorComanda[2];
                 if (nrCuv == 7)
-                    verificaIFNOT();
+                    verifyIFNOT();
                 if (nrCuv == 7 || nrCuv == 4)
-                    verificaParanteze();
+                    verifyParanthesis();
                 else
                     cout << "wrong command: wrong table name (has space)" << endl;
             }
@@ -92,7 +92,7 @@ public:
         }
     }
 
-    void verificaIFNOT() {
+    void verifyIFNOT() {
         std::string verificare = this->vectorComanda[3] + std::string(this->vectorComanda[4]) + this->vectorComanda[5];
 
         if (verificare == "IFNOTEXISTS") {
@@ -105,7 +105,7 @@ public:
         }
     }
 
-    void verificaParanteze() {
+    void verifyParanthesis() {
         if (this->vectorComanda[this->nrCuv - 1] != nullptr) {
             if ((this->vectorComanda[this->nrCuv - 1][0] == '(' && this->vectorComanda[this->nrCuv - 1][1] != '(') || (this->vectorComanda[this->nrCuv - 1][strlen(vectorComanda[this->nrCuv - 1]) - 2] != ')' && this->vectorComanda[this->nrCuv - 1][strlen(vectorComanda[this->nrCuv - 1]) - 1] == ')')) {
                 cout << "wrong command (missing ())" << endl;
@@ -199,4 +199,5 @@ public:
     }
 
 };
+//initialize the static variable
 int CREATE::commandNumber = 4;
