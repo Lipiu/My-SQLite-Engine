@@ -4,6 +4,7 @@
 #include "header files/DROP_TABLE.h"
 #include "header files/FILE.h"
 #include "header files/INSERT.h"
+#include "header files/DELETE.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -35,7 +36,7 @@ int main() {
             fileHandler.writeToFile("Select command not implemented yet.");
             break;
         case 1:
-            if (strcmp(p.getVector()[0], "INSERT") == 0 && strcmp(p.getVector()[1], "INTO") == 0) {
+            if (strcmp(p.getVector()[0], "INSERT") == 0) {
                 INSERT insertCommand(p);
                 // Log the INSERT command to file
                 fileHandler.writeToFile("INSERT command executed.");
@@ -76,9 +77,16 @@ int main() {
                 delete[] words; // Clean up the dynamically allocated memory
                 break;
             }
+        case 6:
+            if (strcmp(p.getVector()[0], "DELETE") == 0) {
+                DELETE d(p);
+                // Log successful DELETE command to file
+                fileHandler.writeToFile("DELETE command executed.");
+                break;
+            }
+        case 7:
         default:
-            cout << "Unrecognized command type." << endl;
-            fileHandler.writeToFile("Unrecognized command type.");
+    
             break;
         }
     }

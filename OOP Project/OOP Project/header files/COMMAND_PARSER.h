@@ -1,4 +1,4 @@
-
+﻿
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
@@ -14,13 +14,14 @@ private:
     char* vector[20];
     int nrvector = 0;
     int comVal = -1;
-    const char* matrix[6][2] = {
+    const char* matrix[7][2] = {
         {"SELECT", "SELECT (cel_putin_o_coloana, ...) | ALL FROM nume_tabela [WHERE nume_coloan? = valoare]"},
         {"INSERT", "INSERT INTO nume_tabela VALUES(...); valorile sunt separate prin, ?i au num?rul ?i ordinea exacta ca defini?ia tabelului;"},
         {"UPDATE", "UPDATE nume_tabela SET nume_coloan? = valoare WHERE nume_coloan? = valoare"},
         {"CREATE", "CREATE TABLE table_name [IF NOT EXISTS] ((column_1_name,type,size, default_value), etc"},
         {"DISPLAY", "DISPLAY TABLE table_name"},
-        {"DROP", "DROP TABLE table_name"}
+        {"DROP", "DROP TABLE table_name"},
+    {"DELETE","DELETE FROM nume_tabela WHERE nume_coloană = valoare"}
     };
 
 public:
@@ -152,4 +153,4 @@ public:
 };
 
 //initialized static int with 6 (number of total commands)
-int Command_parser::NUMBER_OF_COMMANDS = 6;
+int Command_parser::NUMBER_OF_COMMANDS = 7;
