@@ -3,6 +3,7 @@
 #include "header files/DISPLAY.h"
 #include "header files/DROP_TABLE.h"
 #include "header files/FILE.h"
+#include "header files/INSERT.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -34,9 +35,12 @@ int main() {
             fileHandler.writeToFile("Select command not implemented yet.");
             break;
         case 1:
-            cout << "Insert command not implemented yet." << endl;
-            fileHandler.writeToFile("Insert command not implemented yet.");
-            break;
+            if (strcmp(p.getVector()[0], "INSERT") == 0 && strcmp(p.getVector()[1], "INTO") == 0) {
+                INSERT insertCommand(p);
+                // Log the INSERT command to file
+                fileHandler.writeToFile("INSERT command executed.");
+                break;
+            }
         case 2:
             cout << "Update command not implemented yet." << endl;
             fileHandler.writeToFile("Update command not implemented yet.");
