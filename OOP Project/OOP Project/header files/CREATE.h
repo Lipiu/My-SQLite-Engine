@@ -194,7 +194,8 @@ public:
 
         if (this->columnCount != 0 && ok == 1) {
             Table t(this->tableName, this->columns, this->columnCount);
-            t.printTableInfo();
+            //t.printTableInfo(); -> old way of printing
+            cout << t;
         }
     }
 

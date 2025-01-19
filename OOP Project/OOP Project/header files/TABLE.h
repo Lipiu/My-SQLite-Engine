@@ -86,27 +86,30 @@ public:
 	}
 
 	//print info
-	void printTableInfo() const {
-		cout << "afisez tabel" << endl;
-		if (this->columns == nullptr)
-			return;
-
-		cout << "\nTable name: "<< this->getTableName() << endl;
-		cout << "Number of columns: " << this->columnCount << endl;
 	
-		for (int i = 0; i < columnCount; i++) {
-			cout << "---------------------"<<endl;
-			cout << "column " << i + 1 << ":" << endl;
-			cout << "name: " << this->columns[i].getName()<<" ";
-			cout << "type: ";
-			if (this->columns[i].getType() == "integer")
-				cout << "numeric";
-			else
-				cout << this->columns[i].getType();
-			cout << "\n";
-
-			cout << "dimension: " << this->columns[i].getSize() << endl;
-			cout << "default: " << this->columns[i].getDefaultValue() << endl;
-		}
-	}
+	friend ostream& operator<<(ostream& out, Table t);
 };
+ostream& operator<<(ostream& out, Table t) {
+	
+	
+
+	cout << "\nTable name: " << t.tableName << endl;
+	cout << "Number of columns: " << t.columnCount<< endl;
+
+	for (int i = 0; i < t.columnCount; i++) {
+		cout << "---------------------" << endl;
+		cout << "column " << i + 1 << ":" << endl;
+		cout << "name: " << t.columns[i].getName() << " ";
+		cout << "type: ";
+		if (t.columns[i].getType() == "integer")
+			cout << "numeric";
+		else
+			cout << t.columns[i].getType();
+		cout << "\n";
+
+		cout << "dimension: " << t.columns[i].getSize() << endl;
+		cout << "default: " << t.columns[i].getDefaultValue() << endl;
+	}
+
+	return out;
+}
