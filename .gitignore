@@ -395,7 +395,7 @@ FodyWeavers.xsd
 *.msp
 
 # JetBrains Rider
-*.sln.iml
+#*.sln.iml
 
 #Add additional VS files
 
