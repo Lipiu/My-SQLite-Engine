@@ -11,12 +11,16 @@ private:
 
 public:
     // Default constructor
-    FileHandler() : fileName("output.txt") {}
+    FileHandler() {}
 
     // Parameterized constructor
     FileHandler(const string& fileName) {
+        outputFile.open(fileName, ios::app);
+        if (!outputFile.is_open()) {
+            cerr << "Error: failed to open file " << this->fileName << endl;
+            throw runtime_error("Failed to open file: " + this->fileName);
+        }
         this->setFileName(fileName);
-        openFile();
     }
 
     //Getter for fileName (in case we need)
@@ -32,24 +36,11 @@ public:
         fileName = newFileName;
     }
 
-    // Method for opening the file
-    void openFile() {
-        outputFile.open(fileName, ios::app); // Open in append mode
-        if (!outputFile) {
-            throw runtime_error("Could not open the file");
-        }
-    }
-
     // Method to write to file
     void writeToFile(const string& data) {
         if (!outputFile.is_open()) {
             throw runtime_error("File is not open");
         }
         outputFile << data << endl;
-    }
-
-    // Check if file is open
-    bool isFileOpen() const {
-        return outputFile.is_open();
     }
 };

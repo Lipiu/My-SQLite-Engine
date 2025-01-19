@@ -86,7 +86,7 @@ int main() {
             }
         case 7:
         default:
-    
+
             break;
         }
     }
